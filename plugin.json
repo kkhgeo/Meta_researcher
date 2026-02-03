@@ -1,0 +1,23 @@
+{
+  "name": "meta-researcher",
+  "version": "0.2.1",
+  "description": "논문 PDF에서 지식을 추출하고, 다중 소스(Knowledge, PDF, Web)를 활용하여 학술 글쓰기를 지원하는 연구 도구",
+  "author": "KKH",
+  "skills": [
+    "skills/knowledge-extraction",
+    "skills/meta-writing"
+  ],
+  "future_skills": [
+    "skills/knowledge-search"
+  ],
+  "repository": "",
+  "license": "MIT",
+  "keywords": [
+    "research",
+    "knowledge-extraction",
+    "academic-writing",
+    "multi-source",
+    "geochemistry",
+    "literature-review"
+  ]
+}
