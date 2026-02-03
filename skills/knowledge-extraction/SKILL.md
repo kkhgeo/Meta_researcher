@@ -3,10 +3,13 @@ name: knowledge-extraction
 description: |
   논문 PDF에서 핵심 지식을 추출하여 구조화된 마크다운으로 저장.
   5가지 인식론적 카테고리(이론, 실증, 방법론, 맥락, 비판)로 분류.
-  Subagent 병렬 처리 지원. 사용 시점: "논문 분석", "지식 추출", 
+  Subagent 병렬 처리 지원. 사용 시점: "논문 분석", "지식 추출",
   "Knowledge 저장" 요청 시 자동 호출.
+  **반드시 references/extraction_template.md 형식을 따를 것!**
 allowed-tools: [Read, Write, Edit, Bash, Task]
 ---
+
+> **⚠️ 필수 사항**: 이 스킬 실행 전 반드시 `references/extraction_template.md`를 읽고 해당 형식(Phase 1~5)을 정확히 따라야 합니다.
 
 # Knowledge Extraction Skill
 
@@ -25,27 +28,56 @@ allowed-tools: [Read, Write, Edit, Bash, Task]
 
 ## 작업 흐름
 
+**⚠️ 중요: 반드시 `references/extraction_template.md` 파일을 먼저 읽고 해당 형식을 따를 것!**
+
 ```
-1. 입력 확인
+0. 템플릿 로드 (필수!)
+   - references/extraction_template.md 파일 읽기
+   - Phase 1~5 구조 확인
+   - 출력 형식 숙지
+
+1. 입력 확인 (Phase 1)
    - PDF 파일 경로
    - 대상 섹션 (미지정 시 전체 논문)
    - 저장할 Knowledge 폴더명
 
-2. 논문 읽기
+2. 논문 읽기 + 요약 (Phase 2)
    - Claude가 PDF 직접 읽음
    - 섹션별 구조 파악
+   - Paper Information, Research Summary 작성
 
-3. 지식 추출 (5가지 카테고리)
+3. 지식 추출 (Phase 3) - 5가지 카테고리
    - Theoretical Foundations (이론적 기반)
    - Empirical Precedents (실증적 선행연구)
    - Methodological Heritage (방법론적 유산)
    - Contextual Knowledge (맥락적 지식)
    - Critical Discourse (비판적 담론)
 
-4. 마크다운 저장
+   **각 카테고리별 테이블 형식 필수:**
+   | Knowledge Claim | 한국어 번역 | Citation Context | Reference (APA) | Section |
+
+4. 추출 요약 (Phase 4)
+   - 지식 분포 통계
+   - 인용 수, 인용 중앙 연도
+
+5. 연구 질문 생성 (Phase 5)
+   - Level 1: 문장 수준 질문
+   - Level 2: 단락 수준 질문
+   - Level 3: 연구 수준 질문
+
+6. 마크다운 저장
    - Knowledge_{주제}/ 폴더에 저장
    - 파일명: {저자}{연도}.md (예: Chen2024.md)
    - index.md 자동 업데이트
+```
+
+### 템플릿 참조 방법
+
+```
+# Subagent나 새 세션에서 실행 시:
+1. 먼저 이 SKILL.md 읽기
+2. references/extraction_template.md 읽기
+3. 템플릿의 Phase 1~5 구조를 정확히 따라 출력
 ```
 
 ## 출력 구조
