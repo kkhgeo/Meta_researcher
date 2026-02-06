@@ -1,11 +1,12 @@
 {
   "name": "meta-researcher",
-  "version": "0.2.1",
-  "description": "논문 PDF에서 지식을 추출하고, 다중 소스(Knowledge, PDF, Web)를 활용하여 학술 글쓰기를 지원하는 연구 도구",
+  "version": "0.3.0",
+  "description": "논문 PDF에서 지식을 추출하고, 다중 소스(Knowledge, PDF, Web)를 활용하여 학술 글쓰기를 지원하며, 참고 논문 기반 스타일 교정을 제공하는 연구 도구",
   "author": "KKH",
   "skills": [
     "skills/knowledge-extraction",
-    "skills/meta-writing"
+    "skills/meta-writing",
+    "skills/style-guide"
   ],
   "future_skills": [
     "skills/knowledge-search"
@@ -18,6 +19,9 @@
     "academic-writing",
     "multi-source",
     "geochemistry",
-    "literature-review"
+    "literature-review",
+    "style-guide",
+    "tone-analysis",
+    "writing-revision"
   ]
 }
