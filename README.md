@@ -1,6 +1,6 @@
 # Meta_researcher
 
-A Claude Code skill set for analyzing research papers (PDF) and supporting academic writing — covering knowledge extraction, style analysis, logic/structure mapping, vocabulary inventory, and multi-source writing.
+A Claude Code skill set for analyzing research papers (PDF) and supporting academic writing — covering knowledge extraction, style analysis, logic/structure mapping, vocabulary inventory, multi-source writing, and multi-reviewer draft improvement.
 
 ## Overview
 
@@ -23,6 +23,9 @@ A Claude Code skill set for analyzing research papers (PDF) and supporting acade
 │       │                                                                  │
 │       └──→ ✍️ meta-writing                                               │
 │                 (academic section writing)                                │
+│                    ↓                                                      │
+│              🔍 draft-review                                              │
+│                 (multi-reviewer draft improvement)                        │
 │                                                                          │
 │  Analysis Layer Separation:                                              │
 │    vocab-extraction  → WHAT words are used                               │
@@ -53,14 +56,17 @@ Copy the `skills/` folder to your project's `.claude/skills/` directory, or to `
 ├── logic-extraction/
 │   ├── SKILL.md
 │   └── references/extraction_template.md
-└── vocab-extraction/
+├── vocab-extraction/
+│   ├── SKILL.md
+│   └── references/extraction_template.md
+└── draft-review/
     ├── SKILL.md
-    └── references/extraction_template.md
+    └── references/review_template.md
 ```
 
 ## Skills
 
-### v0.4.0 (Current)
+### v0.5.0 (Current)
 
 | Skill | Description | Output |
 |-------|-------------|--------|
@@ -69,6 +75,7 @@ Copy the `skills/` folder to your project's `.claude/skills/` directory, or to `
 | style-guide | Extract lexical style patterns (A) / Revise draft to match (B) | `Style_{topic}/` |
 | logic-extraction | Extract structure, argument logic, sentence frames | `Logic_{topic}/` |
 | vocab-extraction | Exhaustive POS word extraction + technical term glossary | `Vocab_{topic}/` |
+| draft-review | Multi-reviewer draft improvement using logic+vocab extractions | `Review_{timestamp}/` |
 
 ---
 
@@ -157,6 +164,25 @@ Exhaustively extract every content word from a paper, organized by section and P
 
 ---
 
+## 6. draft-review
+
+Multi-reviewer draft improvement using pre-extracted logic and vocabulary analysis files.
+
+- **Per-paper Reviewers**: One subagent per reference paper, running in parallel
+- **Four Academic Principles**: Argument Architecture, Prose Rhythm, Cohesion & Coherence, Academic Register
+- **Three Intensity Levels**: Light (flag only) / Standard (flag + rewrites) / Deep (full rewrite)
+- **Three Severity Levels**: Critical / Major / Minor
+
+```
+> "Review this Introduction paragraph"
+> "Deep rewrite this Methods section using all reference papers"
+> "Check logic flow only. Light mode."
+```
+
+Output: `Review_{timestamp}/` folder with individual reviewer reports, cross-reviewer synthesis, and improved draft with change log.
+
+---
+
 ## Typical Workflows
 
 ### Full paper analysis
@@ -170,7 +196,8 @@ Exhaustively extract every content word from a paper, organized by section and P
 ### Academic writing
 ```
 1. meta-writing          → draft sections using Knowledge + PDF + Web
-2. style-guide (Mode B)  → revise draft to match target journal style
+2. draft-review          → multi-reviewer improvement using logic+vocab extractions
+3. style-guide (Mode B)  → revise draft to match target journal style
 ```
 
 ---
@@ -195,13 +222,23 @@ Style_{topic}/              # Style data banks
 ├── index.md
 ├── Weber2021_style.md
 └── cross_section_matrix.md
+
+Review_{YYYYMMDD_HHMMSS}/  # Draft review reports
+├── input.md
+├── reviewer_1.md
+├── reviewer_2.md
+├── synthesis.md
+└── improved_draft.md
 ```
 
 ---
 
 ## Version History
 
-### v0.4.0 (Current)
+### v0.5.0 (Current)
+- Added draft-review skill (multi-reviewer draft improvement with four academic writing principles)
+
+### v0.4.0
 - Added logic-extraction skill (structure, argument logic, sentence frames)
 - Added vocab-extraction skill (exhaustive POS extraction, technical glossary)
 - Added CLAUDE.md project instructions
