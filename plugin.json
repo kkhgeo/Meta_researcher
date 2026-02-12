@@ -6,7 +6,8 @@
   "skills": [
     "skills/knowledge-extraction",
     "skills/meta-writing",
-    "skills/style-guide"
+    "skills/style-guide",
+    "skills/draft-review"
   ],
   "future_skills": [
     "skills/knowledge-search"
@@ -22,6 +23,8 @@
     "literature-review",
     "style-guide",
     "tone-analysis",
-    "writing-revision"
+    "writing-revision",
+    "draft-review",
+    "multi-reviewer"
   ]
 }

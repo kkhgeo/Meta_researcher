@@ -4,7 +4,7 @@
 
 Academic paper analysis and writing toolkit. A set of Claude Code skills for extracting knowledge, analyzing structure/logic/vocabulary/style from research papers (PDF), and supporting academic writing.
 
-## Skills (6 total)
+## Skills (7 total)
 
 | Skill | Purpose | Key Output |
 |-------|---------|------------|
@@ -13,6 +13,7 @@ Academic paper analysis and writing toolkit. A set of Claude Code skills for ext
 | `style-guide` | Extract lexical style patterns (Mode A) / Revise drafts to match style (Mode B) | `Style_{topic}/` |
 | `logic-extraction` | Extract document structure, argument logic flow, and sentence frames | `Logic_{topic}/` |
 | `vocab-extraction` | Exhaustive POS-based word extraction + technical term glossary | `Vocab_{topic}/` |
+| `draft-review` | Multi-reviewer draft improvement using logic+vocab extractions with academic principles | `Review_{timestamp}/` |
 | `gemini-*` | Collaborative workflows with Gemini CLI (collab, discuss, research, review) | Various |
 
 ## Skill Architecture
@@ -31,9 +32,12 @@ skills/
 ├── logic-extraction/        # Structure + logic + sentence frames
 │   ├── SKILL.md
 │   └── references/extraction_template.md
-└── vocab-extraction/        # Exhaustive POS vocabulary + technical glossary
+├── vocab-extraction/        # Exhaustive POS vocabulary + technical glossary
+│   ├── SKILL.md
+│   └── references/extraction_template.md
+└── draft-review/            # Multi-reviewer draft improvement (logic+vocab → improved text)
     ├── SKILL.md
-    └── references/extraction_template.md
+    └── references/review_template.md
 ```
 
 ## Key Conventions
@@ -66,4 +70,5 @@ knowledge-extraction → WHAT knowledge is cited   (epistemic content)
 
 ### Academic writing
 1. `meta-writing` → draft sections using Knowledge + PDF + Web
-2. `style-guide Mode B` → revise draft to match target journal style
+2. `draft-review` → multi-reviewer improvement using logic+vocab extractions
+3. `style-guide Mode B` → revise draft to match target journal style
