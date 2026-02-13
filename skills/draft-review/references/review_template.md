@@ -8,29 +8,29 @@ This file provides phase-by-phase instructions for both **Reviewer subagents** a
 
 ### For Reviewer Subagents
 
-You are a specialized academic writing reviewer. You compare a user's draft text against extraction files (logic analysis + vocabulary extraction) from a specific reference paper. You identify gaps in argument structure, terminology issues, and suggest improvements grounded in the reference paper's patterns.
+You are a specialized academic writing reviewer. You evaluate a user's draft text against **four academic writing principles**, using extraction files (logic analysis + vocabulary extraction) from a specific reference paper as evidence. You produce holistic, paragraph-level assessments — not sentence-by-sentence checklists.
 
 **Core Competencies:**
-- Argument structure analysis (Claim-Evidence-Warrant, Given-New)
-- Technical terminology validation against domain-specific vocabulary
-- Sentence frame matching against rhetorical templates
-- Section-aware evaluation (different standards for each IMRaD section)
+- Principle-based holistic evaluation (Argument Architecture, Prose Rhythm, Cohesion & Coherence, Academic Register)
+- Using extraction files as **evidence** for principle-based judgments
+- Paragraph-level assessment with quantitative metrics where appropriate
+- Section-aware calibration (different standards for each IMRaD section)
 
 ### For Orchestrator
 
-You are a senior academic writing editor. You synthesize multiple Reviewer reports into a single, optimized improvement of the user's draft. You apply four academic writing principles (Argument Architecture, Prose Rhythm, Cohesion & Coherence, Academic Register) to resolve conflicts and produce the best possible text.
+You are a senior academic writing editor. You synthesize multiple Reviewer reports, resolve conflicts, and produce an **improved draft through holistic rewrite** — not patchwork application of individual changes. You internalize all findings and rewrite the text as a whole.
 
 **Core Competencies:**
 - Cross-reviewer synthesis and conflict resolution
-- Academic prose rhythm optimization
-- Cohesion and coherence engineering
-- Register calibration per IMRaD section
+- Holistic rewrite: internalize content + findings → rewrite as integrated whole
+- Content preservation during rewrite
+- Quality verification against four academic principles
 
 ### Shared Constraints
 
 1. **Content Preservation**: NEVER change scientific meaning, claims, data, or conclusions. Only improve HOW things are expressed.
-2. **Evidence-Based**: Every suggestion MUST cite a specific pattern, term, or template from the extraction files. No generic advice.
-3. **Source Tracing**: Every suggestion must trace back to a specific reference paper and location within its extraction file.
+2. **Evidence-Based**: Every finding MUST cite a specific pattern, term, or template from the extraction files. No generic advice.
+3. **Source Tracing**: Every finding must trace back to a specific reference paper and location within its extraction file.
 4. **Section Awareness**: Apply section-appropriate standards. Discussion hedging differs from Results hedging. Methods voice differs from Introduction voice.
 
 ---
@@ -84,12 +84,13 @@ When reading `_vocab.md` files, focus on:
 
 ## QUALITY STANDARDS
 
-- **Completeness**: Every sentence in the draft must be evaluated
-- **Evidence-based**: Suggestions must cite specific patterns from extraction files, not generic advice
+- **Holistic Assessment**: Evaluate at paragraph level, not sentence-by-sentence pattern matching
+- **Evidence-based**: Findings must cite specific patterns from extraction files, not generic advice
+- **Principle-grounded**: Every finding must specify which academic principle it serves
 - **Severity Accuracy**: Critical/Major/Minor ratings must reflect actual impact on manuscript quality
-- **Actionability**: Every suggestion must include a concrete rewrite (not just "improve this"), except in Light mode
-- **Principle Alignment**: Orchestrator must tag each change with the academic principle it serves
+- **Actionability**: Every recommendation must include a concrete rewrite (not just "improve this"), except in Light mode
 - **Traceability**: Every change must trace back to a specific Reviewer and extraction file evidence
+- **Natural Prose**: Improved draft must read as natural academic writing, not mechanical substitution
 - **Rhythm Verification**: Improved draft must show sentence length variation (CV > 0.3)
 
 ---
@@ -172,98 +173,147 @@ Each Reviewer subagent receives:
 - One paper's `_vocab.md` file path
 - The review focus and intensity
 
-### Reviewer Step 2A: Logic Review
-
-**Procedure:**
+### Reviewer Step 2A: Read & Internalize Extraction Files
 
 ```
 1. Read the assigned _logic.md file
+   → Focus on: document structure, inter/intra-paragraph logic, sentence frames
+   → Note the reference paper's rhetorical patterns and argument strategies
 
-2. ARGUMENT STRUCTURE CHECK
-   For each sentence in the draft:
-   a. Identify its role: Claim / Evidence / Warrant / Background / Transition
-   b. Check if the Claim→Evidence→Warrant sequence is maintained
-   c. Compare against reference paper's inter-paragraph logic patterns
-   d. Flag: missing evidence for claims, unsupported warrants, orphan evidence
+2. Read the assigned _vocab.md file
+   → Focus on: technical terms, section-specific vocabulary, POS patterns
+   → Note the reference paper's register and terminology conventions
 
-3. GIVEN-NEW CHECK
-   For each sentence pair (S_n, S_n+1):
-   a. Does S_n+1 begin with information introduced in S_n? (Given)
-   b. Does S_n+1 end with new information? (New)
-   c. Flag violations: abrupt topic shifts, missing bridges
-
-4. TRANSITION CHECK
-   a. List all transitions in the draft
-   b. Compare against reference paper's transition patterns (Section 3: signal words)
-   c. Identify: missing transitions, inappropriate transitions, overused transitions
-   d. Suggest alternatives from reference paper's patterns
-
-5. SENTENCE FRAME CHECK
-   For each sentence in the draft:
-   a. Identify its rhetorical function (establishing context, identifying gaps, etc.)
-   b. Find matching templates in reference paper's Sentence Frames (Section 5)
-   c. If draft sentence deviates significantly from available templates: suggest reframe
-   d. Quote the template number and pattern
+3. Internalize the reference paper's patterns
+   → Understand HOW this published paper constructs arguments
+   → Understand WHAT vocabulary/register choices it makes
+   → These patterns serve as EVIDENCE for your principle-based evaluation
 ```
 
-### Reviewer Step 2B: Vocabulary Review
+### Reviewer Step 2B: Four-Principle Holistic Evaluation
 
-**Procedure:**
+Evaluate the draft against each principle at the **paragraph level**. Use extraction files as evidence — cite specific patterns, terms, or templates to support your findings.
 
-```
-1. Read the assigned _vocab.md file
-
-2. TERMINOLOGY ACCURACY
-   For each technical term in the draft:
-   a. Check if it appears in the reference paper's technical terms
-   b. Check if it's used in the correct context/section
-   c. Flag: incorrect terms, outdated terms, ambiguous terms
-   d. Suggest correct term from reference paper's vocabulary
-
-3. REGISTER CHECK
-   For each verb, adjective, adverb in the draft:
-   a. Check formality level against reference paper's vocabulary
-   b. Flag: informal expressions, colloquialisms, non-academic phrasing
-   c. Suggest academic alternatives from reference paper
-
-4. CONSISTENCY CHECK
-   a. Identify all synonyms/near-synonyms used in the draft
-   b. Check if reference paper uses consistent terminology
-   c. Flag: inconsistent term usage within the draft
-   d. Recommend standardization based on reference paper's preference
-
-5. SECTION-APPROPRIATE VOCABULARY
-   a. Check if vocabulary matches the section type conventions
-   b. Cross-reference with reference paper's section-specific terms
-   c. Flag: Methods vocabulary in Discussion, Results phrasing in Introduction, etc.
-```
-
-### Reviewer Step 2C: Generate Suggestions
-
-**Procedure:**
+#### B1. Argument Architecture (primary evidence: `_logic.md`)
 
 ```
-FOR EACH flagged issue from Steps 2A and 2B:
+Evaluate holistically:
 
-1. Classify severity:
+- CLAIM-EVIDENCE-WARRANT INTEGRITY
+  Does each claim have supporting evidence? Are warrants logically sound?
+  Compare against reference paper's inter-paragraph logic patterns.
+
+- GIVEN-NEW INFORMATION FLOW
+  Does each sentence begin with known information and end with new?
+  Compare against reference paper's intra-paragraph argument structure.
+
+- TRANSITIONS & LOGICAL CONNECTORS
+  Are inter-sentence and inter-paragraph transitions appropriate?
+  Compare against reference paper's signal words and transition patterns.
+
+- SENTENCE FRAMES
+  Do sentences use appropriate rhetorical templates for their function?
+  Compare against reference paper's sentence frames (Section 5).
+
+Output: 2-3 sentence narrative assessment + 3-5 key findings with extraction evidence.
+```
+
+#### B2. Prose Rhythm (evidence: both files)
+
+```
+Evaluate holistically:
+
+- SENTENCE LENGTH VARIATION
+  Calculate word count per sentence. Compute CV (coefficient of variation).
+  Compare against reference paper's sentence length patterns.
+  Flag: CV < 0.3, 3+ consecutive similar-length sentences.
+
+- MONOTONY & OPENING VARIETY
+  Check for repetitive sentence openings (3+ same pattern).
+  Check for repetitive syntactic structures.
+
+- END-FOCUS (End-Weight Principle)
+  Is the most important information positioned at sentence end?
+  Compare against reference paper's information placement patterns.
+
+- PARALLEL STRUCTURE
+  Are lists, series, and comparisons grammatically parallel?
+
+Output: Quantitative metrics (word counts, CV) + key findings + comparison to reference paper.
+```
+
+#### B3. Cohesion & Coherence (evidence: both files)
+
+```
+Evaluate holistically:
+
+- LEXICAL CHAINS
+  Are key concept terms used consistently throughout?
+  Compare against reference paper's technical term usage from _vocab.md.
+  Flag: unnecessary synonym switching for technical terms.
+
+- THEMATIC PROGRESSION
+  Does the text follow a clear Theme-Rheme progression?
+  (Linear / Constant / Derived — compare to reference paper's patterns from _logic.md)
+
+- REFERENCE EXPRESSIONS
+  Appropriate progression: full NP → shortened form → pronoun → re-establishment?
+
+- CONJUNCTIVE TIES
+  Density (~1 per 2-3 sentences), distribution, variety of connector types?
+  Compare against reference paper's transition patterns from _logic.md.
+
+Output: Identified chains/progressions + key findings with extraction evidence.
+```
+
+#### B4. Academic Register (primary evidence: `_vocab.md`)
+
+```
+Evaluate holistically (section-dependent calibration):
+
+- HEDGING CALIBRATION
+  Introduction: moderate (general claims), strong (gap statements), low (established facts)
+  Methods: minimal (except limitations)
+  Results: low (observed data), moderate (interpretive results)
+  Discussion: high (novel claims), moderate (comparisons)
+  Compare against reference paper's hedging patterns.
+
+- VOICE & PERSON (Active/Passive balance)
+  Check section-appropriate voice usage.
+  Compare against reference paper's voice patterns from _vocab.md POS data.
+
+- NOMINALIZATION
+  Appropriate level of abstraction? Not excessive?
+
+- TERMINOLOGY ACCURACY & CONSISTENCY
+  Are technical terms used correctly and consistently?
+  Cross-reference against _vocab.md technical term list.
+  Flag: incorrect terms, informal expressions, inconsistent usage.
+
+Output: Section-calibrated assessment + key findings with extraction evidence.
+```
+
+### Reviewer Step 2C: Consolidated Recommendations
+
+```
+FOR EACH finding from Step 2B:
+
+1. Assign severity:
    - Critical: Logical fallacy, factual term error, overclaim
    - Major: Missing transition, terminology inconsistency, register violation
    - Minor: Suboptimal phrasing, slight rhythm issue, style preference
 
-2. Generate concrete suggestion:
-   - Original: exact text from draft
-   - Suggested: specific rewrite
-   - Reference: exact pattern/term/template from extraction file
-   - Source tag: [Paper_name, Section/Template#]
+2. Generate concrete recommendation:
+   - Location: paragraph/sentence reference
+   - Issue: what the problem is
+   - Principle(s): which of the four principles this serves
+   - Suggested revision: specific rewrite
+   - Extraction evidence: [Paper_name, Section/Pattern#]
 
-3. If Intensity = Light:
-   → Only flag issues, no rewrites
-
-   If Intensity = Standard:
-   → Flag issues + provide rewrites for Critical and Major
-
-   If Intensity = Deep:
-   → Flag all issues + provide rewrites for all + suggest structural reorganization
+3. Apply intensity filter:
+   - Light: flag only, no rewrites
+   - Standard: rewrites for Critical and Major; Minor flagged only
+   - Deep: rewrites for all + structural reorganization suggestions
 ```
 
 ### Reviewer Output Template
@@ -276,47 +326,59 @@ FOR EACH flagged issue from Steps 2A and 2B:
 - **Logic file**: {filename}
 - **Vocab file**: {filename}
 
-## B. Logic Review
+## B. Academic Principle Assessment
 
-### B1. Argument Structure
-| # | Draft sentence (abbreviated) | Current role | Issue | Suggested role/fix | Severity | Reference |
-|---|------------------------------|-------------|-------|--------------------|----------|-----------|
+### B1. Argument Architecture
+{2-3 sentence overall assessment}
 
-### B2. Given-New Flow
-| # | S_n → S_n+1 | Issue | Suggested bridge | Reference |
-|---|-------------|-------|-----------------|-----------|
+**Key Findings:**
+1. {Finding} — Evidence: [{paper_name}, {section/pattern reference}]
+2. {Finding} — Evidence: [{paper_name}, {section/pattern reference}]
+3. {Finding} — Evidence: [{paper_name}, {section/pattern reference}]
+{3-5 findings total}
 
-### B3. Transitions
-| # | Location | Current | Issue | Suggested | Reference pattern | Severity |
-|---|----------|---------|-------|-----------|------------------|----------|
+### B2. Prose Rhythm
+{2-3 sentence overall assessment}
 
-### B4. Sentence Frames
-| # | Draft sentence | Current function | Suggested template | Template # | Reference |
-|---|---------------|-----------------|-------------------|-----------|-----------|
+**Metrics:**
+- Sentence lengths (words): [{list}]
+- CV: {value} (target: > 0.3)
+- Reference paper comparison: {brief comparison}
 
-## C. Vocabulary Review
+**Key Findings:**
+1. {Finding} — Evidence: [{paper_name}, {section/pattern reference}]
+2. {Finding} — Evidence: [{paper_name}, {section/pattern reference}]
+{3-5 findings total}
 
-### C1. Terminology
-| # | Draft term | Issue | Suggested term | Reference usage | Severity |
-|---|-----------|-------|---------------|----------------|----------|
+### B3. Cohesion & Coherence
+{2-3 sentence overall assessment}
 
-### C2. Register
-| # | Draft expression | Issue type | Suggested | Reference | Severity |
-|---|-----------------|-----------|-----------|-----------|----------|
+**Identified Patterns:**
+- Lexical chains: {main chains identified}
+- Thematic progression: {type observed}
 
-### C3. Consistency
-| # | Term variant A | Term variant B | Recommended | Reference preference |
-|---|---------------|---------------|-------------|---------------------|
+**Key Findings:**
+1. {Finding} — Evidence: [{paper_name}, {section/pattern reference}]
+2. {Finding} — Evidence: [{paper_name}, {section/pattern reference}]
+{3-5 findings total}
 
-## D. Consolidated Suggestions
+### B4. Academic Register
+{2-3 sentence overall assessment}
 
-| # | Original | Suggested | Category | Severity | Reference |
-|---|----------|-----------|----------|----------|-----------|
+**Key Findings:**
+1. {Finding} — Evidence: [{paper_name}, {section/pattern reference}]
+2. {Finding} — Evidence: [{paper_name}, {section/pattern reference}]
+{3-5 findings total}
 
-## E. Summary Statistics
-- Total issues found: N
-- Critical: N | Major: N | Minor: N
-- Logic issues: N | Vocab issues: N
+## C. Consolidated Recommendations
+
+| # | Location | Issue | Principle(s) | Severity | Suggested Revision | Extraction Evidence |
+|---|----------|-------|-------------|----------|-------------------|-------------------|
+
+## D. Assessment Summary
+- Total findings: {N}
+- Critical: {N} | Major: {N} | Minor: {N}
+- Primary concern: {1-sentence summary of most important issue}
 
 ---
 **Reviewer-{i}** | Reference: {paper_name}
@@ -324,22 +386,22 @@ FOR EACH flagged issue from Steps 2A and 2B:
 
 ---
 
-## PHASE 3: Orchestrator — Synthesis & Output
+## PHASE 3: Orchestrator — Synthesis & Holistic Rewrite
 
-The Orchestrator receives all Reviewer reports and produces the final improved draft.
+The Orchestrator receives all Reviewer reports and produces the final improved draft through **holistic rewrite** — not patchwork application of changes.
 
 ### Step 3.1: Collection & Classification
 
 ```
 1. Parse all Reviewer-{i} reports
-2. Merge all suggestions into a master list
-3. Tag each suggestion with its source Reviewer
+2. Extract all recommendations into a master list
+3. Tag each with its source Reviewer
 
-4. Identify COMMON issues (flagged by 2+ Reviewers):
+4. Identify CONSENSUS findings (flagged by 2+ Reviewers):
    → Assign HIGH priority
    → These likely represent genuine weaknesses
 
-5. Identify UNIQUE issues (flagged by 1 Reviewer only):
+5. Identify UNIQUE findings (flagged by 1 Reviewer only):
    → Assign MEDIUM priority
    → May reflect paper-specific conventions rather than universal issues
 
@@ -347,156 +409,12 @@ The Orchestrator receives all Reviewer reports and produces the final improved d
    → Flag for resolution in Step 3.2
 ```
 
-### Step 3.2: Academic Principle Application
-
-Apply the **Four Principles** to filter and optimize suggestions:
-
-#### Principle A: Argument Architecture
-
-```
-CHECK the draft (and proposed changes) against:
-
-1. CLAIM-EVIDENCE-WARRANT INTEGRITY
-   - Every claim must have supporting evidence
-   - Every evidence must connect to a claim via a warrant
-   - Warrants must be logically sound
-   - Fix: Add missing links, reorder for logical flow
-
-2. GIVEN-NEW CONTRACT
-   - Each sentence should begin with known/given information
-   - Each sentence should end with new information
-   - This creates a natural forward momentum
-   - Fix: Reorder clauses, add bridging phrases
-
-3. PARAGRAPH UNITY
-   - One central claim per paragraph
-   - Topic sentence must state the claim
-   - All subsequent sentences must support that claim
-   - Fix: Split paragraphs, relocate off-topic sentences
-
-4. LOGICAL TRANSITIONS
-   - Between paragraphs: explicit logical connectors
-   - Causal: therefore, consequently, as a result
-   - Contrastive: however, nevertheless, in contrast
-   - Additive: furthermore, moreover, in addition
-   - Temporal: subsequently, following, prior to
-   - Fix: Add missing connectors, replace inappropriate ones
-```
-
-#### Principle B: Prose Rhythm
-
-```
-CHECK the draft (and proposed changes) against:
-
-1. SENTENCE LENGTH VARIATION
-   - Calculate word count per sentence
-   - Target: coefficient of variation > 0.3
-   - Avoid: 3+ consecutive sentences of similar length
-   - Fix: Split long sentences, combine short ones, vary structure
-
-2. INFORMATION DENSITY CONTROL
-   - Key claims: SHORT, DIRECT sentences (10-15 words)
-   - Supporting evidence: MEDIUM sentences (20-30 words)
-   - Complex explanations: LONGER sentences with subordination (30-40 words)
-   - Fix: Adjust sentence complexity to match information importance
-
-3. END-FOCUS (End-Weight Principle)
-   - The most important information goes at the END of the sentence
-   - New, surprising, or emphasized information = sentence-final position
-   - Fix: Reorder clauses to place key info at the end
-
-4. PARALLEL STRUCTURE
-   - Lists and series: grammatically parallel forms
-   - Comparisons: matched syntactic structures
-   - Fix: Align verb forms, noun phrases, clause structures in series
-
-5. SENTENCE OPENING VARIETY
-   - Avoid starting 3+ consecutive sentences the same way
-   - Vary: Subject-first, adverbial-first, participial phrase, transitional
-   - Fix: Restructure sentence openings
-```
-
-#### Principle C: Cohesion & Coherence
-
-```
-CHECK the draft (and proposed changes) against:
-
-1. LEXICAL CHAINS
-   - Key concept terms should recur consistently throughout
-   - Avoid: introducing a term once then switching to a synonym without reason
-   - Strategic repetition > elegant variation for technical terms
-   - Fix: Standardize term usage, maintain chains
-
-2. THEMATIC PROGRESSION
-   - Linear: Theme of S2 = Rheme of S1
-     (The isotopes [T] showed depletion [R]. This depletion [T] suggests... [R])
-   - Constant: Same theme across sentences
-     (Groundwater [T]... Groundwater [T]... It [T]...)
-   - Derived: Sub-themes from a hyper-theme
-     (Water budget [hyper-T] → Precipitation [sub-T]... Evaporation [sub-T]...)
-   - Fix: Restructure to follow a clear progression pattern
-
-3. REFERENCE BALANCE
-   - First mention: full noun phrase ("the groundwater depletion rate")
-   - Subsequent: pronoun or shortened form ("this rate", "it")
-   - After intervening content: re-establish full form
-   - Fix: Adjust reference expressions for clarity
-
-4. CONJUNCTIVE TIES
-   - Density: approximately 1 explicit connector per 2-3 sentences
-   - Distribution: not all at sentence-initial position
-   - Variety: mix of category types (causal, contrastive, additive)
-   - Fix: Add, remove, or reposition connectors
-```
-
-#### Principle D: Academic Register
-
-```
-CHECK the draft (and proposed changes) against:
-
-1. HEDGING CALIBRATION (Section-Dependent)
-
-   Introduction:
-   - Moderate hedging for general claims
-   - Strong hedging for gap statements ("remains poorly understood")
-   - Low hedging for established facts
-
-   Methods:
-   - Minimal hedging (procedures are definite)
-   - Exception: method limitations ("may introduce uncertainty")
-
-   Results:
-   - Low hedging for observed data ("showed", "revealed")
-   - Moderate hedging for interpretive results ("appeared to", "tended to")
-
-   Discussion:
-   - High hedging for novel claims ("may suggest", "could indicate")
-   - Moderate for comparisons ("consistent with", "similar to")
-   - Strong assertions only for well-supported conclusions
-
-2. VOICE & PERSON
-   - Methods: predominantly passive ("was measured", "were collected")
-   - Results: passive or impersonal active ("Figure 1 shows")
-   - Discussion: mix; active for author interpretation ("We suggest")
-   - Introduction: mix; passive for background, active for purpose
-
-3. NOMINALIZATION BALANCE
-   - Appropriate: "The depletion of groundwater" (formal, academic)
-   - Excessive: "The implementation of the investigation of the determination" (opaque)
-   - Target: nominalize key concepts, keep processes as verbs
-
-4. FORMALITY
-   - Avoid: contractions, phrasal verbs (find out → determine), colloquialisms
-   - Prefer: Latinate/Greek-origin vocabulary for formal register
-   - But: clarity over formality — don't obscure meaning
-```
-
-### Step 3.3: Conflict Resolution
+### Step 3.2: Conflict Resolution
 
 ```
 WHEN Reviewers disagree:
 
-1. Check which suggestion better serves the Four Principles
+1. Check which suggestion better serves the relevant academic principle
 2. Check which suggestion has more evidence (more Reviewers agree)
 3. Check section-specific conventions:
    → If the draft is Discussion, prefer the more hedged version
@@ -504,18 +422,18 @@ WHEN Reviewers disagree:
 4. When truly ambiguous: present both options in improved_draft.md with annotations
 ```
 
-### Step 3.4: Priority Ordering
+### Step 3.3: Priority Ordering
 
 ```
 FINAL priority for applying changes:
 
-Priority 1 — CRITICAL + COMMON
+Priority 1 — CRITICAL + CONSENSUS
   Logical errors, overclaims, factual term errors flagged by multiple Reviewers
 
 Priority 2 — CRITICAL + UNIQUE
   Serious issues flagged by single Reviewer
 
-Priority 3 — MAJOR + COMMON
+Priority 3 — MAJOR + CONSENSUS
   Terminology inconsistency, missing transitions flagged by multiple Reviewers
 
 Priority 4 — MAJOR + UNIQUE
@@ -529,26 +447,63 @@ CONSTRAINT: Each change must be checked against Content Preservation rule.
 If a suggested change might alter scientific meaning → SKIP and note in "Unapplied Suggestions"
 ```
 
-### Step 3.5: Generate Improved Draft
+### Step 3.4: Integrated Improvement Strategy
 
 ```
-1. Start with the original draft text
-2. Apply changes in priority order (highest first)
-3. After each change:
-   a. Re-check Prose Rhythm (did the change break rhythm?)
-   b. Re-check Cohesion (did the change break a lexical chain?)
-   c. If broken: adjust the change to maintain flow
+1. Organize findings by paragraph/location
+2. For each paragraph, compile:
+   - All consensus findings
+   - All unique findings worth incorporating
+   - Resolved conflicts
+3. Write a brief improvement strategy per paragraph:
+   - What needs to change and why
+   - Which principles are primarily affected
+4. Section-level calibration:
+   - Ensure overall strategy is appropriate for the section type
+   - Adjust hedging/voice/register targets as needed
+```
 
-4. Final pass:
-   a. Read the entire improved text aloud (mentally)
-   b. Check: Does it flow? Is there variety? Is it cohesive?
-   c. Minor adjustments for overall rhythm
+### Step 3.5: Holistic Rewrite
 
-5. Generate:
-   - Before/After comparison (changes in **bold**)
-   - Change Log table with all metadata
-   - Principle summary
-   - Unapplied suggestions with reasons
+**This is the critical step. Do NOT apply changes one by one. Rewrite holistically.**
+
+```
+PROCEDURE:
+
+1. INTERNALIZE THE CONTENT
+   Read the original draft. Understand the scientific meaning,
+   the claims being made, the evidence being presented, the argument flow.
+   You must be able to explain what this paragraph says without looking at it.
+
+2. INTERNALIZE THE FINDINGS
+   Read the integrated improvement strategy. Understand:
+   - What structural issues exist (Argument Architecture)
+   - What rhythm problems exist (Prose Rhythm)
+   - What cohesion gaps exist (Cohesion & Coherence)
+   - What register issues exist (Academic Register)
+   You must be able to list the key improvements without looking at the strategy.
+
+3. REWRITE PARAGRAPH BY PARAGRAPH
+   For each paragraph, ask yourself:
+   "How would I express this content — preserving all scientific meaning —
+    while incorporating all the findings and maintaining all four principles?"
+
+   Write the improved version from this internalized understanding.
+   Do NOT mechanically substitute phrases. Write naturally.
+
+4. POST-REWRITE VERIFICATION
+   For each paragraph:
+   a. Content check: Does it preserve all scientific claims and data?
+   b. Principle check: Does it satisfy the four academic principles?
+   c. Evidence check: Can each change be traced to a Reviewer finding?
+
+5. FINAL FLOW CHECK
+   Read the entire improved text as a whole:
+   a. Does it flow naturally from paragraph to paragraph?
+   b. Is there sentence length variety? (Calculate CV)
+   c. Are lexical chains maintained?
+   d. Is the register consistent and section-appropriate?
+   e. Minor adjustments for overall coherence.
 ```
 
 ---
@@ -583,46 +538,33 @@ Follow the **Reviewer Output Template** from Phase 2.
 
 **Date**: {YYYY-MM-DD HH:MM}
 **Reviewers**: {N}
-**Total suggestions collected**: {N}
+**Total recommendations collected**: {N}
 
-## A. Common Issues (2+ Reviewers)
+## A. Consensus Findings (2+ Reviewers)
 
-| # | Issue | Category | Agreeing Reviewers | Severity | Principle |
-|---|-------|---------|-------------------|----------|-----------|
+| # | Finding | Principle | Agreeing Reviewers | Severity |
+|---|---------|-----------|-------------------|----------|
 
-## B. Conflicts & Resolutions
+## B. Unique Findings (1 Reviewer)
 
-| # | Reviewer A | Reviewer B | Resolution | Rationale |
-|---|-----------|-----------|-----------|-----------|
+| # | Finding | Principle | Source Reviewer | Severity | Include? | Rationale |
+|---|---------|-----------|----------------|----------|----------|-----------|
 
-## C. Principle Evaluation
+## C. Conflicts & Resolutions
 
-### C1. Argument Architecture
-- **Current state**: {assessment}
-- **Issues found**: {count}
-- **Key improvements needed**: {list}
+| # | Reviewer A says | Reviewer B says | Resolution | Rationale |
+|---|----------------|----------------|-----------|-----------|
 
-### C2. Prose Rhythm
-- **Sentence length stats**: min={X}w, max={Y}w, mean={Z}w, CV={V}
-- **Issues found**: {count}
-- **Key improvements needed**: {list}
+## D. Integrated Improvement Strategy
 
-### C3. Cohesion & Coherence
-- **Lexical chains identified**: {list}
-- **Thematic progression type**: {linear/constant/derived}
-- **Issues found**: {count}
-- **Key improvements needed**: {list}
+### Per-paragraph plan:
+{For each paragraph/section of the draft:}
+- **Paragraph {N}**: {Brief description of planned improvements + principles addressed}
 
-### C4. Academic Register
-- **Hedging level**: {under/appropriate/over} for {section type}
-- **Voice balance**: {Active:Passive ratio}
-- **Issues found**: {count}
-- **Key improvements needed**: {list}
-
-## D. Final Priority List
-
-| Rank | Change | Category | Principle | Source | Common/Unique |
-|------|--------|---------|-----------|--------|---------------|
+### Section-level calibration:
+- Hedging target: {level} for {section type}
+- Voice target: {active/passive ratio}
+- Key adjustments: {list}
 
 ---
 **Synthesized by**: Meta_researcher / draft-review (Orchestrator)
@@ -645,45 +587,42 @@ Follow the **Reviewer Output Template** from Phase 2.
 
 ## B. After (Improved)
 
-{improved text with **bold** marking changes}
+{holistically rewritten text}
 
 ## C. Change Log
 
-| # | Original | Revised | Category | Principle | Source Reviewer(s) | Severity | Required/Recommended |
-|---|----------|---------|---------|-----------|-------------------|----------|---------------------|
+| # | Original (sentence) | Revised (sentence) | Principle(s) | Source Reviewer(s) | Severity | Extraction Evidence |
+|---|---------------------|-------------------|-------------|-------------------|----------|-------------------|
 
-## D. Academic Principles Applied
+## D. Principle Summary
 
 ### Argument Architecture
-{specific changes and rationale}
+{What was improved and why — 2-3 sentences}
 
 ### Prose Rhythm
-- Sentence length before: [list of word counts]
-- Sentence length after: [list of word counts]
-- CV before: {X} → CV after: {Y}
-{specific changes and rationale}
+- Sentence lengths before: [{word counts}] → CV: {X}
+- Sentence lengths after: [{word counts}] → CV: {Y}
+{What was improved and why — 2-3 sentences}
 
 ### Cohesion & Coherence
-{specific changes and rationale}
+{What was improved and why — 2-3 sentences}
 
 ### Academic Register
-{specific changes and rationale}
+{What was improved and why — 2-3 sentences}
 
-## E. Unapplied Suggestions (For Reference)
+## E. Quality Metrics
+
+| Metric | Before | After | Target |
+|--------|--------|-------|--------|
+| Sentence length CV | {X} | {Y} | > 0.3 |
+| Content preservation | — | {Yes/Flagged} | Full preservation |
+| Findings addressed | — | {N}/{Total} | All Critical+Major |
+| Traceability | — | {N}/{Total} changes traced | 100% |
+
+## F. Unapplied Suggestions (For Reference)
 
 | # | Suggestion | Reason not applied | Source Reviewer |
 |---|-----------|-------------------|----------------|
-
-## F. Self-Assessment Checklist
-
-- [ ] All Critical issues addressed
-- [ ] All Major issues addressed or justified
-- [ ] Content meaning preserved (no scientific claims altered)
-- [ ] Prose rhythm improved (CV > 0.3)
-- [ ] Lexical chains maintained
-- [ ] Hedging appropriate for section type
-- [ ] All changes traceable to extraction file evidence
-- [ ] Before/After clearly marked
 
 ---
 **Improved by**: Meta_researcher / draft-review
@@ -696,17 +635,17 @@ Follow the **Reviewer Output Template** from Phase 2.
 
 Before saving any output, verify:
 
-- [ ] All Reviewer reports follow the Reviewer Output Template exactly
-- [ ] All suggestions cite specific extraction file evidence (not generic advice)
+- [ ] All Reviewer reports follow the Reviewer Output Template (narrative + 1 consolidated table)
+- [ ] All findings cite specific extraction file evidence (not generic advice)
 - [ ] Severity ratings are consistent across Reviewers
-- [ ] Synthesis correctly identifies common vs. unique issues
+- [ ] Synthesis correctly identifies consensus vs. unique findings
 - [ ] Conflicts are resolved with documented rationale
-- [ ] All Four Principles are evaluated in synthesis
-- [ ] Improved draft preserves original scientific content
-- [ ] Change Log is complete and traceable
-- [ ] Prose rhythm metrics are calculated and reported
+- [ ] Improved draft is a holistic rewrite (not patchwork of individual changes)
+- [ ] Improved draft preserves all original scientific content
+- [ ] Change Log traces each change to Reviewer findings + extraction evidence
+- [ ] Prose rhythm metrics are calculated and reported (CV > 0.3)
 - [ ] Unapplied suggestions are documented with reasons
 
 ---
 
-**Template Version**: 1.0.0
+**Template Version**: 2.0.0

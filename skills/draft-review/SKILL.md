@@ -2,8 +2,9 @@
 name: draft-review
 description: |
   Review and improve user's draft (paragraph/section) against multiple reference paper
-  extraction files (logic + vocab). Per-paper Reviewer subagents run parallel reviews,
-  then Orchestrator synthesizes using four academic writing principles.
+  extraction files (logic + vocab). Per-paper Reviewer subagents evaluate the draft
+  using four academic writing principles (with extraction files as evidence),
+  then Orchestrator synthesizes findings and produces a holistic rewrite.
   Triggers: "초고 점검", "단락 개선", "리뷰해줘", "draft review".
   **MUST read references/review_template.md before starting!**
 allowed-tools: [Read, Write, Edit, Bash, Task, Glob, Grep]
@@ -16,7 +17,7 @@ allowed-tools: [Read, Write, Edit, Bash, Task, Glob, Grep]
 
 ## Overview
 
-Review a user's academic draft (paragraph or section) by comparing it against pre-extracted reference paper analysis files (`_logic.md`, `_vocab.md`) from multiple angles, then produce an improved version.
+Review a user's academic draft (paragraph or section) by comparing it against pre-extracted reference paper analysis files (`_logic.md`, `_vocab.md`), then produce an improved version through holistic rewrite.
 
 **Core Architecture:**
 ```
@@ -24,12 +25,18 @@ User's draft text
     ↓
 [Phase 1] Input parsing & extraction file discovery
     ↓
-[Phase 2] Reviewer-1 ~ Reviewer-N parallel review (one subagent per paper)
+[Phase 2] Reviewer-1 ~ Reviewer-N: 4-principle holistic evaluation (one subagent per paper)
     ↓
-[Phase 3] Orchestrator synthesis & output (four academic principles applied)
+[Phase 3] Orchestrator: synthesis + conflict resolution + holistic rewrite
     ↓
 Output: Review_{timestamp}/ folder with all reports + improved draft
 ```
+
+**Key Design Decisions:**
+- Each Reviewer evaluates ALL four academic principles (not just pattern matching)
+- Extraction files serve as **evidence** for principle-based evaluation (not checklists)
+- Orchestrator focuses on **synthesis + holistic rewrite** (not principle application)
+- Improved draft is a **complete rewrite**, not patchwork of individual changes
 
 **Relationship to Other Skills:**
 - **Downstream consumer** of `logic-extraction` and `vocab-extraction` outputs
@@ -133,79 +140,68 @@ Output: Review_{timestamp}/ folder with all reports + improved draft
 
 Assign **one subagent per reference paper**.
 
-Each Reviewer performs three review steps (see `review_template.md` Phase 2 for detailed procedures):
+Each Reviewer evaluates the draft against **all four academic writing principles**, using extraction files as evidence (see `review_template.md` Phase 2 for detailed procedures):
 
 ```
 FOR EACH reference paper (i = 1 to N):
     → Launch Task (Subagent): Reviewer-{i}
     → Input: draft text + paper's _logic.md + _vocab.md
 
-    Step A: Logic Review (from _logic.md)
-        - Argument structure check (Claim→Evidence→Warrant)
-        - Given-New information flow
-        - Transition appropriateness
-        - Sentence frame matching against rhetorical templates
+    Step A: Read Extraction Files
+        - Read _logic.md: structure, argument flow, sentence frames
+        - Read _vocab.md: terminology, register, POS patterns
+        - Internalize the reference paper's patterns
 
-    Step B: Vocabulary Review (from _vocab.md)
-        - Technical term accuracy and consistency
-        - Register check (informal expression detection)
-        - Synonym/near-synonym consistency
-        - Section-appropriate vocabulary validation
+    Step B: Four-Principle Holistic Evaluation
+        - B1. Argument Architecture (using _logic.md)
+              Claim-Evidence-Warrant integrity, Given-New flow,
+              transitions, sentence frames
+        - B2. Prose Rhythm (using both files)
+              Sentence length variation, monotony, end-focus,
+              parallel structure — with quantitative metrics
+        - B3. Cohesion & Coherence (using both files)
+              Lexical chains, thematic progression, reference
+              expressions, conjunctive ties
+        - B4. Academic Register (using _vocab.md)
+              Hedging, active/passive voice, nominalization,
+              term accuracy — section-appropriate calibration
 
-    Step C: Generate Suggestions
-        - Aggregate issues from Steps A and B
+    Step C: Consolidated Recommendations
+        - Integrate findings across all four principles
         - Classify severity: Critical / Major / Minor
-        - Generate concrete rewrites (per intensity level)
+        - One unified table with extraction evidence
 ```
 
-**Output**: Structured Reviewer report → see `review_template.md` Reviewer Output Template.
+**Output**: Narrative assessment + single consolidated table → see `review_template.md` Reviewer Output Template.
 
 ### Phase 3: Orchestrator Synthesis & Output
 
-Collect all Reviewer reports and optimize using **four academic writing principles**.
+Collect all Reviewer reports, synthesize findings, resolve conflicts, and produce a **holistic rewrite**.
 
 ```
 Step 1: Collection & Classification
-    → Merge all Reviewer suggestions by category
-    → Identify COMMON issues (2+ Reviewers flag same problem → high priority)
+    → Parse all Reviewer reports
+    → Classify findings: CONSENSUS (2+ Reviewers) vs. UNIQUE (1 Reviewer only)
     → Identify CONFLICTS (contradictory suggestions)
 
-Step 2: Apply Four Academic Principles
-
-    [A] Argument Architecture
-        - Claim → Evidence → Warrant triad
-        - Given-New Contract: given info first, new info last
-        - Paragraph unity: one paragraph = one central claim
-        - Logical transitions: explicit inter-paragraph connectors
-
-    [B] Prose Rhythm
-        - Sentence length variation: long-short alternation (prevent monotony)
-        - Information density control: key claims short and strong
-        - End-focus: most important information at sentence end
-        - Parallel structure: grammatical parallelism in series
-        - Sentence opening variety: avoid 3+ consecutive same-pattern openings
-
-    [C] Cohesion & Coherence
-        - Lexical chains: consistent recurrence of key terms
-        - Thematic progression: natural Theme-Rheme flow
-        - Reference balance: repetition vs. pronoun equilibrium
-        - Conjunctive ties: appropriate placement of however, moreover, consequently
-
-    [D] Academic Register
-        - Hedging: may, suggest, indicate — assertion vs. reservation calibration
-        - Objectivity: avoid unnecessary first-person, balance active/passive
-        - Nominalization: appropriate level of abstraction
-        - Section convention: IMRaD section-specific tone
-
-Step 3: Conflict Resolution & Priority Ordering
-    → Critical + Common > Critical + Unique > Major + Common > Major + Unique > Minor
+Step 2: Conflict Resolution & Priority Ordering
+    → Critical + Consensus > Critical + Unique > Major + Consensus > Major + Unique > Minor
     → Section-specific preferences (Discussion → prefer hedged; Methods → prefer precise)
     → Content preservation: NEVER alter scientific meaning
 
-Step 4: Generate Improved Draft
-    → Apply changes in priority order
-    → After each change: re-check rhythm and cohesion; adjust if broken
-    → Final pass for overall flow
+Step 3: Integrated Improvement Strategy
+    → Merge consensus/unique findings into per-paragraph improvement plan
+    → Ensure all four principles are addressed (already evaluated by Reviewers)
+    → Section-specific calibration adjustments
+
+Step 4: Holistic Rewrite
+    → Internalize original draft content (meaning, claims, data)
+    → Internalize all Reviewer findings and improvement strategy
+    → Rewrite paragraph by paragraph:
+       "How would I express this content, incorporating all findings,
+        while maintaining the four academic principles?"
+    → Post-rewrite verification: principle compliance + content preservation
+    → Final flow check: read entire improved text as a whole
 
 Step 5: Write Output Files
     → Write all files to Review_{timestamp}/ folder
@@ -232,9 +228,9 @@ Review_{YYYYMMDD_HHMMSS}/
 | File | Key Sections | Details |
 |------|-------------|---------|
 | `input.md` | Metadata + original draft | Date, section type, focus, intensity, full draft text |
-| `reviewer_{i}.md` | A. Paper Info → B. Logic Review (B1-B4) → C. Vocab Review (C1-C3) → D. Consolidated Suggestions → E. Summary Stats | One per reference paper |
-| `synthesis.md` | A. Common Issues → B. Conflicts & Resolutions → C. Principle Evaluation (C1-C4) → D. Final Priority List | Cross-reviewer synthesis |
-| `improved_draft.md` | A. Before → B. After → C. Change Log → D. Principles Applied → E. Unapplied Suggestions → F. Self-Assessment Checklist | Final deliverable |
+| `reviewer_{i}.md` | A. Paper Info → B. Principle Assessment (B1-B4 narrative) → C. Consolidated Recommendations (1 table) → D. Summary | Narrative + single integrated table per paper |
+| `synthesis.md` | A. Consensus Findings → B. Unique Findings → C. Conflicts & Resolutions → D. Integrated Improvement Strategy | Lightweight cross-reviewer synthesis |
+| `improved_draft.md` | A. Before → B. After → C. Change Log → D. Principle Summary → E. Quality Metrics | Holistic rewrite with per-sentence rationale |
 
 **For complete output templates with exact table columns and formats**, see `references/review_template.md` Step 3.6: Output Generation.
 
@@ -258,8 +254,9 @@ N reference papers found
 ### Subagent Prompt Template
 
 ```
-You are Reviewer-{i}. Your task is to review the user's draft text
-against extraction files from a reference paper.
+You are Reviewer-{i}. Your task is to evaluate the user's draft text
+against four academic writing principles, using extraction files from
+a reference paper as evidence.
 
 **MUST READ FIRST**: {skill_path}/references/review_template.md
 
@@ -270,8 +267,10 @@ against extraction files from a reference paper.
 **Focus**: {logic/vocab/both}
 **Intensity**: {Light/Standard/Deep}
 
+Evaluate all four principles (Argument Architecture, Prose Rhythm,
+Cohesion & Coherence, Academic Register) using extraction files as evidence.
+Produce narrative assessments + one consolidated recommendations table.
 Follow the Reviewer Output Template in review_template.md exactly.
-Output your report as structured markdown.
 ```
 
 ---
@@ -280,10 +279,10 @@ Output your report as structured markdown.
 
 1. **Evidence-based**: Every suggestion must cite a specific pattern/term/template from extraction files. No generic advice.
 2. **Content preservation**: NEVER alter scientific meaning, claims, or data — expression only
-3. **Completeness**: Every sentence in the draft must be evaluated
-4. **Actionability**: Every suggestion must include a concrete rewrite (not just "improve this"), except in Light mode
-5. **Principle-tagged**: Every Orchestrator change must specify which of the four principles it serves
-6. **Traceable**: Every change must trace back to a specific Reviewer's suggestion
+3. **Holistic assessment**: Evaluate at paragraph level, not sentence-by-sentence pattern matching
+4. **Principle-grounded**: Every finding must specify which of the four principles it serves
+5. **Natural prose**: Improved draft must read as natural academic writing, not mechanical substitution
+6. **Traceable**: Every change must trace back to a specific Reviewer's finding + extraction evidence
 7. **Prioritized**: Changes ordered Critical > Major > Minor
 8. **Rhythm-verified**: Improved draft must show sentence length variation (CV > 0.3)
 
@@ -339,5 +338,5 @@ Output your report as structured markdown.
 
 ---
 
-**Version**: 1.1.0
+**Version**: 2.0.0
 **Skill by**: Meta_researcher / draft-review

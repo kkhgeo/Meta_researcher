@@ -1,0 +1,22 @@
+{
+  "name": "meta-researcher",
+  "description": "Academic paper analysis and writing toolkit. Extract knowledge, analyze structure/logic/vocabulary/style from research papers (PDF), and support academic writing with multi-reviewer draft improvement.",
+  "version": "0.6.0",
+  "author": {
+    "name": "KKH"
+  },
+  "license": "MIT",
+  "keywords": [
+    "research",
+    "knowledge-extraction",
+    "academic-writing",
+    "multi-source",
+    "literature-review",
+    "style-guide",
+    "draft-review",
+    "multi-reviewer",
+    "logic-extraction",
+    "vocab-extraction"
+  ],
+  "skills": "./skills/"
+}
