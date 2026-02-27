@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "metadata": {
+    "session_id": "",
+    "created_at": "",
+    "updated_at": "",
+    "research_objective": "",
+    "objective_keywords": [],
+    "dataset_path": "",
+    "max_cycles": 10,
+    "current_cycle": 0,
+    "status": "initializing"
+  },
+  "dataset_profile": null,
+  "cycles": [],
+  "hypotheses": [],
+  "findings": [],
+  "task_queue": [],
+  "discoveries": []
+}

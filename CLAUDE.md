@@ -4,7 +4,7 @@
 
 Academic paper analysis and writing toolkit. A set of Claude Code skills for extracting knowledge, analyzing structure/logic/vocabulary/style from research papers (PDF), and supporting academic writing.
 
-## Skills (7 total)
+## Skills (8 total)
 
 | Skill | Purpose | Key Output |
 |-------|---------|------------|
@@ -14,6 +14,7 @@ Academic paper analysis and writing toolkit. A set of Claude Code skills for ext
 | `logic-extraction` | Extract document structure, argument logic flow, and sentence frames | `Logic_{topic}/` |
 | `vocab-extraction` | Exhaustive POS-based word extraction + technical term glossary | `Vocab_{topic}/` |
 | `draft-review` | Multi-reviewer draft improvement using logic+vocab extractions with academic principles | `Review_{timestamp}/` |
+| `agentic-research` | Kosmos-inspired autonomous iterative data analysis + literature search discovery | Research session reports |
 | `gemini-*` | Collaborative workflows with Gemini CLI (collab, discuss, research, review) | Various |
 
 ## Skill Architecture
@@ -35,9 +36,14 @@ skills/
 ├── vocab-extraction/        # Exhaustive POS vocabulary + technical glossary
 │   ├── SKILL.md
 │   └── references/extraction_template.md
-└── draft-review/            # Multi-reviewer draft improvement (logic+vocab → improved text)
+├── draft-review/            # Multi-reviewer draft improvement (logic+vocab → improved text)
+│   ├── SKILL.md
+│   └── references/review_template.md
+└── agentic-research/        # Autonomous data-driven scientific discovery (Kosmos-inspired)
     ├── SKILL.md
-    └── references/review_template.md
+    ├── scripts/{init_world_model,profile_dataset,orchestrator,update_world_model,generate_report}.py
+    ├── references/{world_model_spec,report_template,domain_geoscience}.md
+    └── templates/world_model_template.json
 ```
 
 ## Key Conventions
@@ -72,3 +78,8 @@ knowledge-extraction → WHAT knowledge is cited   (epistemic content)
 1. `meta-writing` → draft sections using Knowledge + PDF + Web
 2. `draft-review` → multi-reviewer improvement using logic+vocab extractions
 3. `style-guide Mode B` → revise draft to match target journal style
+
+### Data-driven discovery
+1. `agentic-research` → iterative cycles of data analysis + literature search
+2. World model tracks hypotheses, findings, and evidence across cycles
+3. Final traceable report with code/literature citations
