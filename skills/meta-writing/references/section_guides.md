@@ -2,6 +2,9 @@
 
 ## 섹션별 글쓰기 상세 가이드
 
+이 파일은 SKILL.md Phase 3에서 해당 섹션 작성 시 참조한다.
+각 섹션의 단락 구조, 전환어, Knowledge 카테고리 매핑, 예시를 제공한다.
+
 ---
 
 ## 1. Introduction
@@ -12,27 +15,24 @@
 ### 구조
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                     │
-│  단락 1: 연구 배경 및 중요성                                        │
-│  - 주제의 광범위한 맥락                                             │
-│  - 왜 이 주제가 중요한가                                            │
-│  - Knowledge 카테고리: Contextual Knowledge                         │
-│                                                                     │
-│  단락 2: 선행연구 종합                                              │
-│  - 기존 연구들이 밝힌 것                                            │
-│  - 시간순/지역순 정렬                                               │
-│  - Knowledge 카테고리: Empirical Precedents, Theoretical Foundations│
-│                                                                     │
-│  단락 3: 연구 갭 및 목적                                            │
-│  - 아직 밝혀지지 않은 것                                            │
-│  - 본 연구의 목적과 접근법                                          │
-│  - Knowledge 카테고리: Critical Discourse                           │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
+단락 1: 연구 배경 및 중요성
+  - 주제의 광범위한 맥락
+  - 왜 이 주제가 중요한가
+  - Knowledge 카테고리: Contextual Knowledge
+
+단락 2: 선행연구 종합
+  - 기존 연구들이 밝힌 것
+  - 시간순/지역순 정렬
+  - Knowledge 카테고리: Empirical Precedents, Theoretical Foundations
+
+단락 3: 연구 갭 및 목적
+  - 아직 밝혀지지 않은 것
+  - 본 연구의 목적과 접근법
+  - Knowledge 카테고리: Critical Discourse
 ```
 
 ### 전환어
+
 | 영어 | 한국어 | 용도 |
 |------|--------|------|
 | has been extensively studied | 광범위하게 연구되어 왔다 | 선행연구 소개 |
@@ -44,23 +44,19 @@
 ### 예시 단락 (선행연구)
 
 **[English]**
-Stable isotope signatures in groundwater have been widely used to trace 
-contamination sources and understand hydrological processes (Clark & Fritz, 
-1997). Studies in East Asia have demonstrated that δ18O and δ2H values 
-effectively distinguish between different recharge sources (Chen et al., 
-2024). Furthermore, Sr isotope ratios (87Sr/86Sr) have proven valuable for 
-identifying anthropogenic inputs in agricultural regions (Kim et al., 2023). 
-However, integrated multi-isotope approaches remain limited in Korean 
-groundwater systems, particularly in areas with complex land use patterns.
+[Method/approach] has been widely used to [broad application] (Author1, Year).
+Studies in [region/domain] have demonstrated that [specific variable/technique]
+effectively [function/outcome] (Author2, Year). Furthermore, [complementary
+approach] has proven valuable for [additional application] (Author3, Year).
+However, [integrated/novel approach] remains limited in [specific context],
+particularly in [conditions where gap exists].
 
 **[한국어]**
-지하수의 안정 동위원소 특성은 오염원 추적과 수문학적 과정 이해에 널리 
-활용되어 왔다(Clark & Fritz, 1997). 동아시아 연구들은 δ18O와 δ2H 값이 
-서로 다른 함양원을 효과적으로 구별함을 보여주었다(Chen et al., 2024). 
-또한, Sr 동위원소비(87Sr/86Sr)는 농업 지역의 인위적 유입을 식별하는 데 
-유용함이 입증되었다(Kim et al., 2023). 그러나 복합적인 토지 이용 패턴을 
-가진 지역, 특히 한국 지하수 시스템에서 다중 동위원소 통합 접근법은 
-여전히 제한적이다.
+[방법/접근법]은 [광범위한 적용 분야]에 널리 활용되어 왔다(Author1, Year).
+[지역/분야]의 연구들은 [특정 변수/기법]이 [기능/결과]를 효과적으로
+수행함을 보여주었다(Author2, Year). 또한, [보완적 접근법]은 [추가 적용
+분야]에서 유용함이 입증되었다(Author3, Year). 그러나 [통합적/새로운
+접근법]은 [특정 맥락]에서, 특히 [갭이 존재하는 조건]에서 여전히 제한적이다.
 
 ---
 
@@ -72,28 +68,25 @@ groundwater systems, particularly in areas with complex land use patterns.
 ### 구조
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                     │
-│  단락 1: 연구 지역 및 시료                                          │
-│  - 연구 지역 설명                                                   │
-│  - 시료 채취 방법 및 개수                                           │
-│  - Knowledge 카테고리: Contextual Knowledge                         │
-│                                                                     │
-│  단락 2: 분석 방법                                                  │
-│  - 사용 기기 및 조건                                                │
-│  - 분석 프로토콜                                                    │
-│  - 정밀도/정확도                                                    │
-│  - Knowledge 카테고리: Methodological Heritage                      │
-│                                                                     │
-│  단락 3: 데이터 처리                                                │
-│  - 통계 분석 방법                                                   │
-│  - 품질 관리                                                        │
-│  - Knowledge 카테고리: Methodological Heritage                      │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
+단락 1: 연구 지역 및 시료
+  - 연구 지역 설명
+  - 시료 채취 방법 및 개수
+  - Knowledge 카테고리: Contextual Knowledge
+
+단락 2: 분석 방법
+  - 사용 기기 및 조건
+  - 분석 프로토콜
+  - 정밀도/정확도
+  - Knowledge 카테고리: Methodological Heritage
+
+단락 3: 데이터 처리
+  - 통계 분석 방법
+  - 품질 관리
+  - Knowledge 카테고리: Methodological Heritage
 ```
 
 ### 전환어
+
 | 영어 | 한국어 | 용도 |
 |------|--------|------|
 | following the method of | ~의 방법을 따라 | 방법 인용 |
@@ -101,14 +94,14 @@ groundwater systems, particularly in areas with complex land use patterns.
 | was performed according to | ~에 따라 수행되었다 | 절차 설명 |
 | validated by | ~에 의해 검증되었다 | 품질 관리 |
 
-### 지구화학 특화 표현
+### Methods 표현 예시
 
 | 항목 | 표현 예시 |
 |------|----------|
-| 동위원소 분석 | "analyzed using MC-ICP-MS (Neptune Plus, Thermo Fisher)" |
-| 정밀도 | "with an external precision of ±0.2‰ (2σ)" |
-| 표준물질 | "normalized to VSMOW for oxygen isotopes" |
-| 시료 수 | "A total of 45 groundwater samples were collected" |
+| 분석 기기 | "analyzed using [기기명] ([모델], [제조사])" |
+| 정밀도/정확도 | "with a precision of ±[값] ([단위])" |
+| 표준/기준 | "calibrated against [표준물질/기준]" |
+| 시료/데이터 수 | "A total of [N] samples/observations were collected" |
 
 ---
 
@@ -120,27 +113,42 @@ groundwater systems, particularly in areas with complex land use patterns.
 ### 구조
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                     │
-│  단락 1: 주요 결과 제시                                             │
-│  - 데이터 범위, 평균, 분포                                          │
-│  - 그림/표 참조                                                     │
-│  - Knowledge 카테고리: (본 연구 데이터)                             │
-│                                                                     │
-│  단락 2: 패턴 및 관계                                               │
-│  - 변수 간 상관관계                                                 │
-│  - 공간적/시간적 패턴                                               │
-│  - Knowledge 카테고리: Empirical Precedents (비교용)                │
-│                                                                     │
-│  단락 3: 선행연구와 비교                                            │
-│  - 유사점과 차이점                                                  │
-│  - 가능한 원인                                                      │
-│  - Knowledge 카테고리: Empirical Precedents                         │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
+단락 1: 주요 결과 제시
+  - My Data: 데이터 범위, 평균, 분포
+  - My Data: 그림/표 참조
+  - Knowledge 카테고리: (본 연구 데이터)
+
+단락 2: 패턴 및 관계
+  - My Data: 변수 간 상관관계
+  - My Data: 공간적/시간적 패턴
+  - Knowledge: 비교용 선행연구 데이터
+
+단락 3: 선행연구와 비교
+  - My Data vs Knowledge: 유사점과 차이점
+  - Knowledge: 가능한 원인 참조
+  - Knowledge 카테고리: Empirical Precedents
+```
+
+### My Data → Knowledge 비교 패턴
+
+Results에서 내 데이터를 기술한 뒤 선행연구와 비교하는 문장 패턴:
+
+```
+패턴 1: 유사한 경우
+"The [variable] values in this study ([range]) are comparable to
+those reported by [Author] ([Year]) in similar settings ([range])."
+
+패턴 2: 차이가 있는 경우
+"In contrast to [Author] ([Year]), who reported [their finding],
+the present study showed [different finding]."
+
+패턴 3: 새로운 패턴 발견
+"Notably, [novel pattern] was identified (Figure N), which has
+not been previously reported in [relevant domain/context]."
 ```
 
 ### 전환어
+
 | 영어 | 한국어 | 용도 |
 |------|--------|------|
 | showed that | ~을 보여주었다 | 결과 제시 |
@@ -151,13 +159,15 @@ groundwater systems, particularly in areas with complex land use patterns.
 
 ### 데이터 비교 표현
 
-```markdown
-| 본 연구 | 선행연구 | 비교 표현 |
-|---------|----------|-----------|
-| δ18O: -8.5‰ | δ18O: -7.2‰ (Chen, 2024) | "slightly more depleted than" |
-| 같은 범위 | 같은 범위 (Kim, 2023) | "consistent with" |
-| 더 넓은 범위 | 좁은 범위 (Park, 2022) | "showed a wider range compared to" |
-```
+| 비교 상황 | 비교 표현 (영어) | 비교 표현 (한국어) |
+|-----------|-----------------|-------------------|
+| 본 연구 값이 더 낮음 | "slightly lower/smaller than" | "~보다 다소 낮았다" |
+| 같은 범위 | "consistent with", "comparable to" | "~와 일치한다", "~와 유사하다" |
+| 본 연구 값이 더 높음 | "higher/greater than" | "~보다 높았다" |
+| 더 넓은 분포 | "showed a wider range compared to" | "더 넓은 범위를 보였다" |
+| 새로운 패턴 | "not previously reported" | "이전에 보고된 바 없다" |
+| 추세 일치 | "in agreement with", "corroborating" | "~를 뒷받침한다" |
+| 추세 불일치 | "in contrast to", "contrary to" | "~와 대조적으로" |
 
 ---
 
@@ -169,32 +179,29 @@ groundwater systems, particularly in areas with complex land use patterns.
 ### 구조
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                                                                     │
-│  단락 1: 결과 해석                                                  │
-│  - 주요 발견의 의미                                                 │
-│  - 메커니즘 설명                                                    │
-│  - Knowledge 카테고리: Theoretical Foundations                      │
-│                                                                     │
-│  단락 2: 선행연구와 비교 논의                                       │
-│  - 일치/불일치 이유                                                 │
-│  - 지역적/방법론적 차이                                             │
-│  - Knowledge 카테고리: Empirical Precedents, Critical Discourse     │
-│                                                                     │
-│  단락 3: 함의 및 적용                                               │
-│  - 이론적/실용적 함의                                               │
-│  - 정책/관리 제안                                                   │
-│  - Knowledge 카테고리: Contextual Knowledge                         │
-│                                                                     │
-│  단락 4: 한계점 및 향후 연구                                        │
-│  - 연구의 한계 인정                                                 │
-│  - 향후 연구 방향 제안                                              │
-│  - Knowledge 카테고리: Critical Discourse                           │
-│                                                                     │
-└─────────────────────────────────────────────────────────────────────┘
+단락 1: 결과 해석
+  - My Data: 주요 발견의 의미
+  - Knowledge: 메커니즘 설명 근거
+  - Knowledge 카테고리: Theoretical Foundations
+
+단락 2: 선행연구와 비교 논의
+  - My Data vs Knowledge: 일치/불일치 이유
+  - Knowledge: 지역적/방법론적 차이 근거
+  - Knowledge 카테고리: Empirical Precedents, Critical Discourse
+
+단락 3: 함의 및 적용
+  - My Data: 이론적/실용적 함의
+  - Knowledge: 정책/관리 맥락
+  - Knowledge 카테고리: Contextual Knowledge
+
+단락 4: 한계점 및 향후 연구
+  - My Data: 연구의 한계 인정
+  - Knowledge: 향후 연구 방향 근거
+  - Knowledge 카테고리: Critical Discourse
 ```
 
 ### 전환어
+
 | 영어 | 한국어 | 용도 |
 |------|--------|------|
 | suggests that | ~을 시사한다 | 해석 |
@@ -215,56 +222,110 @@ groundwater systems, particularly in areas with complex land use patterns.
 
 ## 5. 그림/표 해석 가이드
 
-### 그림 해석 요청 시
+### 5.1 그림(Figure) 해석
 
+사용자가 그림을 제공하고 해석 또는 기술을 요청한 경우, 3단계로 처리한다.
+
+**1단계: 그림 읽기 (My Data)**
 ```
-입력:
-- 사용자 그림 (Figure)
-- Knowledge 폴더
-
-출력 구조:
-1. 그림의 주요 패턴 기술
-2. Knowledge에서 관련 선행연구 데이터 검색
-3. 선행연구와 비교 문장 작성
-4. 해석 및 의미 제시
+- 그림 유형 식별 (산점도, 막대그래프, 지도, 시계열 등)
+- 축 라벨과 단위 파악
+- 데이터 포인트 분포와 패턴 식별
+- 정량적 정보 추출 (범위, 그룹, 추세)
 ```
 
-### 표 비교 요청 시
-
+**2단계: Knowledge와 비교**
 ```
-입력:
-- 사용자 표 (Table)
-- Knowledge 폴더
-
-출력 구조:
-1. 표의 주요 데이터 요약
-2. Knowledge에서 유사 데이터 검색
-3. 비교 표 또는 문장 작성
-4. 차이/유사점 해석
+- Knowledge에서 동일/유사 유형의 데이터 검색
+- 수치 범위 비교 쌍 생성
+- 유사점과 차이점 정리
 ```
 
-### 예시: 표 비교 출력
+**3단계: 학술 문장 생성**
+```
+Results용: 패턴 기술 + 선행연구 비교
+Discussion용: 패턴 해석 + 메커니즘 논의
+```
 
-**[English]**
-The δ18O values in this study (-8.5 to -6.2‰) are comparable to those 
-reported for Korean groundwater systems. Chen et al. (2024) documented 
-a range of -7.8 to -5.9‰ in similar geological settings, while Kim et al. 
-(2023) reported slightly more enriched values (-6.5 to -4.8‰) in 
-agricultural areas. The relatively depleted signatures observed in 
-this study may reflect higher elevation recharge sources.
+### 그림 유형별 기술 패턴
 
-**[한국어]**
-본 연구의 δ18O 값(-8.5 ~ -6.2‰)은 한국 지하수 시스템에서 보고된 
-값들과 비교 가능하다. Chen et al.(2024)은 유사한 지질 환경에서 
--7.8 ~ -5.9‰ 범위를 기록하였고, Kim et al.(2023)은 농업 지역에서 
-약간 더 농축된 값(-6.5 ~ -4.8‰)을 보고하였다. 본 연구에서 관찰된 
-상대적으로 결핍된 특성은 높은 고도의 함양원을 반영할 수 있다.
+**산점도 (Scatter plot):**
+```
+"Figure N shows the relationship between X and Y.
+The values ranged from A to B for X and C to D for Y.
+[N개의 그룹/추세/패턴] were identified."
+```
+
+**공간 분포도 (Spatial map):**
+```
+"The spatial distribution of X is presented in Figure N.
+Higher values were observed in [지역], while lower values
+were concentrated in [지역]."
+```
+
+**시계열 (Time series):**
+```
+"Temporal variations of X are shown in Figure N.
+[증가/감소/변동] trends were observed during [기간],
+with [최대/최소] values occurring in [시점]."
+```
+
+**박스 플롯 (Box plot):**
+```
+"Figure N compares the distribution of X across [그룹].
+The median values ranged from A ([그룹1]) to B ([그룹2]),
+with [그룹N] showing the largest variability."
+```
+
+### 5.2 표(Table) 해석
+
+**1단계: 표 읽기 (My Data)**
+```
+- 열(Column) 구조와 변수 파악
+- 행(Row) = 시료/지점/시기 확인
+- 기초 통계: 범위, 평균, 표준편차
+- 이상값 또는 특이 패턴
+```
+
+**2단계: Knowledge와 비교**
+```
+- Knowledge에서 동일 변수의 데이터 검색
+- 비교 표 생성:
+
+| 변수 | 본 연구 | Author1 (Year) | Author2 (Year) |
+|------|---------|----------------|----------------|
+| [변수1] | [범위] | [범위] | [범위] |
+| [변수2] | [범위] | [범위] | [범위] |
+```
+
+**3단계: 비교 문장 생성**
+
+```
+"The [variable] values in this study ([range]) are comparable
+to those reported for [context/domain]. [Author1] et al.
+([Year]) documented a range of [range] in similar
+settings, while [Author2] et al. ([Year]) reported [different
+values] in [different context]."
+```
+
+### 5.3 복합 해석 (그림 + 표 + Knowledge)
+
+사용자가 여러 My Data 자료를 함께 제공한 경우:
+
+```
+1. 각 자료를 개별 분석 (위 절차)
+2. 자료 간 관계 파악:
+   - Figure 1의 그룹이 Table 1의 어떤 시료에 해당하는가?
+   - 공간 분포(Figure 2)와 데이터(Table 1)의 관계
+3. 통합 해석 문장 생성
+4. Knowledge와 비교하여 의미 부여
+```
 
 ---
 
 ## 공통 주의사항
 
-### 인용 밀도
+### 인용 밀도 (Knowledge Sources 기준)
 - Introduction: 단락당 3-5개
 - Methods: 단락당 2-3개
 - Results: 단락당 3-4개 (비교 시)
@@ -275,7 +336,8 @@ this study may reflect higher elevation recharge sources.
 |------|------|------|
 | Introduction (선행연구) | 현재완료/과거 | "has been studied", "reported" |
 | Methods | 과거 | "was collected", "were analyzed" |
-| Results | 과거 | "showed", "ranged" |
+| Results (내 데이터) | 과거 | "showed", "ranged" |
+| Results (선행연구 비교) | 현재완료/과거 | "have reported", "documented" |
 | Discussion | 현재/과거 | "suggests", "may indicate" |
 
 ### 피해야 할 표현
@@ -286,5 +348,29 @@ this study may reflect higher elevation recharge sources.
 
 ---
 
-**Version**: 0.1.0
-**Last Updated**: 2025
+## Web 검색 가이드
+
+### 검색 쿼리 구성법
+
+```
+기본 패턴: "[핵심 변수/개념] [방법론/기법] [지역/맥락]"
+선행연구 탐색: "[주제] review OR meta-analysis"
+최신 연구: "[주제] [현재 연도 또는 최근 2년]"
+방법론 참조: "[기법명] method OR protocol OR procedure"
+```
+
+### 신뢰할 수 있는 학술 소스
+
+- Google Scholar
+- ScienceDirect (Elsevier)
+- Wiley Online Library
+- SpringerLink
+- PubMed / PMC (의생명)
+- IEEE Xplore (공학/IT)
+- ACS Publications (화학)
+- Nature / Science 계열
+- 분야별 주요 저널 (사용자 프로젝트에 따라 조정)
+
+---
+
+**Version**: 0.2.0
