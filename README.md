@@ -1,6 +1,6 @@
 # Meta_researcher
 
-A Claude Code skill set for analyzing research papers (PDF) and supporting academic writing — covering knowledge extraction, style analysis, logic/structure mapping, vocabulary inventory, multi-source writing, and multi-reviewer draft improvement.
+A Claude Code skill set for analyzing research papers (PDF) and supporting academic writing — covering knowledge extraction, style analysis, logic/structure mapping, vocabulary inventory, multi-source writing, multi-reviewer draft improvement, and autonomous data-driven research.
 
 ## Overview
 
@@ -27,6 +27,10 @@ A Claude Code skill set for analyzing research papers (PDF) and supporting acade
 │              🔍 draft-review                                              │
 │                 (multi-reviewer draft improvement)                        │
 │                                                                          │
+│  📊 Dataset + Literature                                                 │
+│       └──→ 🤖 agentic-research                                           │
+│                 (autonomous data-driven scientific discovery)             │
+│                                                                          │
 │  Analysis Layer Separation:                                              │
 │    vocab-extraction  → WHAT words are used                               │
 │    style-guide       → HOW words are used                                │
@@ -49,7 +53,8 @@ Copy the `skills/` folder to your project's `.claude/skills/` directory, or to `
 │   └── references/extraction_template.md
 ├── meta-writing/
 │   ├── SKILL.md
-│   └── references/{writing_template,section_guides}.md
+│   ├── writing.local.template.md
+│   └── references/{writing_template,section_guides,citation-and-verification}.md
 ├── style-guide/
 │   ├── SKILL.md
 │   └── references/{extraction_template,revision_guide}.md
@@ -59,23 +64,30 @@ Copy the `skills/` folder to your project's `.claude/skills/` directory, or to `
 ├── vocab-extraction/
 │   ├── SKILL.md
 │   └── references/extraction_template.md
-└── draft-review/
+├── draft-review/
+│   ├── SKILL.md
+│   └── references/review_template.md
+└── agentic-research/
     ├── SKILL.md
-    └── references/review_template.md
+    ├── README.md
+    ├── references/{world_model_spec,report_template,domain_geoscience}.md
+    ├── scripts/{orchestrator,profile_dataset,init_world_model,...}.py
+    └── templates/world_model_template.json
 ```
 
 ## Skills
 
-### v0.5.0 (Current)
+### v0.6.0 (Current)
 
 | Skill | Description | Output |
 |-------|-------------|--------|
 | knowledge-extraction | Extract cited knowledge into 5 epistemological categories | `Knowledge_{topic}/` |
-| meta-writing | Multi-source academic writing (Knowledge + PDF + Web) | English + Korean draft |
+| meta-writing | Multi-source academic writing with My Data/Knowledge separation | English + Korean draft |
 | style-guide | Extract lexical style patterns (A) / Revise draft to match (B) | `Style_{topic}/` |
 | logic-extraction | Extract structure, argument logic, sentence frames | `Logic_{topic}/` |
 | vocab-extraction | Exhaustive POS word extraction + technical term glossary | `Vocab_{topic}/` |
 | draft-review | Multi-reviewer draft improvement using logic+vocab extractions | `Review_{timestamp}/` |
+| agentic-research | Autonomous data-driven scientific discovery with iterative analysis | `Research_{topic}/` |
 
 ---
 
@@ -98,22 +110,36 @@ Extract core knowledge claims from research paper PDFs, classified into 5 episte
 
 ---
 
-## 2. meta-writing
+## 2. meta-writing (v0.2.0)
 
-Multi-source based academic section writing with 5-loop knowledge exploration.
+Multi-source academic section writing with clear separation between user's own data and prior research.
 
-| Priority | Source | Description |
-|----------|--------|-------------|
-| 1st | Knowledge folder | Pre-extracted markdown knowledge |
-| 2nd | PDF folder | Direct reading from original papers |
-| 3rd | Web search | Supplementary information |
+**Two-tier source model:**
+
+| Tier | Type | Role in Paper | Citation |
+|------|------|---------------|----------|
+| My Data | Figures, Tables, CSV | Description & interpretation target | `(Figure 1)`, `(Table 2)` — no author citation |
+| Knowledge Sources | Knowledge MD, PDF, Web | Comparison & evidence | `(Author, Year)` with source tags |
+
+**Knowledge Sources priority:**
+
+| Priority | Source | Tag |
+|----------|--------|-----|
+| 1st | Knowledge folder (markdown) | `(Author, Year)` |
+| 2nd | PDF folder (direct reading) | `(Author, Year)*` |
+| 3rd | Web search (gap filling) | `(Author, Year)†` |
+
+**5-Loop process:** Source Scan → Knowledge Reading → My Data Analysis + Gap Check → Synthesis & Writing → Verification
+
+**Project config:** `writing.local.md` for per-project paths, figure/table mapping, and writing settings.
 
 ```
-> "Write the literature review section from Knowledge_isotopes"
-> "Write Discussion based on Knowledge_environmental and papers folder"
+> "Write Results section based on my figures and Knowledge folder"
+> "이 그림 기반으로 Discussion 써줘"
+> "Write Introduction from Knowledge_environmental"
 ```
 
-Output: English + Korean dual output with APA 7 references and verification report.
+Output: English + Korean dual output, APA 7 references (source-tagged), 4-step verification report.
 
 ---
 
@@ -183,6 +209,25 @@ Output: `Review_{timestamp}/` folder with individual reviewer reports, cross-rev
 
 ---
 
+## 7. agentic-research
+
+Kosmos-inspired autonomous research framework for iterative data-driven scientific discovery.
+
+- **Multi-cycle analysis**: Hypothesis generation → code execution → literature grounding → refinement
+- **World Model**: Maintains evolving JSON state of discoveries, hypotheses, and evidence
+- **Literature integration**: Combines data analysis with web search for scientific context
+- **Python scripts**: Dataset profiling, world model management, report generation
+
+```
+> "Analyze this dataset and find interesting patterns"
+> "Run agentic research on my environmental data"
+> "Iterative hypothesis testing on this CSV"
+```
+
+Output: `Research_{topic}/` folder with world model, analysis notebooks, and structured report.
+
+---
+
 ## Typical Workflows
 
 ### Full paper analysis
@@ -195,9 +240,16 @@ Output: `Review_{timestamp}/` folder with individual reviewer reports, cross-rev
 
 ### Academic writing
 ```
-1. meta-writing          → draft sections using Knowledge + PDF + Web
+1. meta-writing          → draft sections using My Data + Knowledge + PDF + Web
 2. draft-review          → multi-reviewer improvement using logic+vocab extractions
 3. style-guide (Mode B)  → revise draft to match target journal style
+```
+
+### Autonomous research
+```
+1. agentic-research      → iterative data analysis + literature grounding
+2. meta-writing          → write up findings with proper citations
+3. draft-review          → review and improve the manuscript
 ```
 
 ---
@@ -229,13 +281,22 @@ Review_{YYYYMMDD_HHMMSS}/  # Draft review reports
 ├── reviewer_2.md
 ├── synthesis.md
 └── improved_draft.md
+
+Research_{topic}/           # Agentic research output
+├── world_model.json
+├── analysis/
+└── report.md
 ```
 
 ---
 
 ## Version History
 
-### v0.5.0 (Current)
+### v0.6.0 (Current)
+- Added agentic-research skill (autonomous data-driven scientific discovery)
+- Upgraded meta-writing to v0.2.0: My Data/Knowledge separation, universal (non-domain-specific), writing.local.md config, citation-and-verification, Glob support
+
+### v0.5.0
 - Added draft-review skill (multi-reviewer draft improvement with four academic writing principles)
 
 ### v0.4.0
