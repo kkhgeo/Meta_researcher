@@ -1,5 +1,5 @@
 ---
-name: vocab-extraction
+name: extraction-vocab
 description: |
   Exhaustively extract ALL content words from academic paper PDFs,
   organized by section and part of speech. Technical/domain terms
@@ -18,9 +18,9 @@ allowed-tools: [Read, Write, Edit, Bash, Task, Glob, Grep]
 
 Exhaustively extracts **every content word** from an academic paper, organized by IMRaD section and part of speech (POS). Technical/domain-specific terms are separately flagged and classified.
 
-**Difference from style-guide**: style-guide selectively extracts "characteristic" academic vocabulary. vocab-extraction captures **every content word** exhaustively, with special attention to domain terminology.
+**Difference from meta-styling**: meta-styling selectively extracts "characteristic" academic vocabulary. extraction-vocab captures **every content word** exhaustively, with special attention to domain terminology.
 
-**Difference from logic-extraction**: logic-extraction focuses on sentence-level frames and argument flow. vocab-extraction focuses on **individual words and multi-word terms** at the lexical level.
+**Difference from extraction-logic**: extraction-logic focuses on sentence-level frames and argument flow. extraction-vocab focuses on **individual words and multi-word terms** at the lexical level.
 
 ---
 
@@ -129,7 +129,7 @@ Vocab_{topic}/
 - Total unique words, POS distribution, technical term ratio
 
 ---
-**Extracted by**: Meta_researcher / vocab-extraction
+**Extracted by**: Meta_researcher / extraction-vocab
 **Date**: {date}
 ```
 
@@ -188,18 +188,18 @@ User: "Analyze vocabulary of these 3 papers"
 ## Integration with Other Skills
 
 ```
-vocab-extraction → Exhaustive word inventory + technical glossary (WHAT words are used)
-style-guide      → Characteristic expressions + hedging + transitions (HOW words are used)
-logic-extraction → Argument structure + sentence frames (HOW sentences are organized)
+extraction-vocab → Exhaustive word inventory + technical glossary (WHAT words are used)
+meta-styling      → Characteristic expressions + hedging + transitions (HOW words are used)
+extraction-logic → Argument structure + sentence frames (HOW sentences are organized)
 
 Combined workflow:
-1. vocab-extraction: build complete word inventory and technical glossary
-2. logic-extraction: understand argument structure and sentence templates
-3. style-guide: understand stylistic patterns
-4. When writing: use glossary (vocab) + structure (logic) + style (style-guide)
+1. extraction-vocab: build complete word inventory and technical glossary
+2. extraction-logic: understand argument structure and sentence templates
+3. meta-styling: understand stylistic patterns
+4. When writing: use glossary (vocab) + structure (logic) + style (meta-styling)
 ```
 
 ---
 
 **Version**: 1.0.0
-**Skill**: Meta_researcher / vocab-extraction
+**Skill**: Meta_researcher / extraction-vocab

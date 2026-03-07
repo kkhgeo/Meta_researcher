@@ -1,6 +1,6 @@
 # Draft Review — Detailed Execution Template
 
-This file provides phase-by-phase instructions for both **Reviewer subagents** and the **Orchestrator**. MUST be read before any draft-review execution.
+This file provides phase-by-phase instructions for both **Reviewer subagents** and the **Orchestrator**. MUST be read before any meta-review execution.
 
 ---
 
@@ -99,7 +99,7 @@ When reading `_vocab.md` files, focus on:
 
 | Situation | Action |
 |-----------|--------|
-| No extraction files found | STOP, guide user to run `logic-extraction` / `vocab-extraction` first |
+| No extraction files found | STOP, guide user to run `extraction-logic` / `extraction-vocab` first |
 | Extraction file missing or unreadable | STOP, report to main agent |
 | Draft text too short (< 2 sentences) | WARN: "Paragraph-level or longer text recommended", proceed with limited analysis |
 | Section type unclear | Attempt auto-detection based on content, flag uncertainty; ask user if unsure |
@@ -567,7 +567,7 @@ Follow the **Reviewer Output Template** from Phase 2.
 - Key adjustments: {list}
 
 ---
-**Synthesized by**: Meta_researcher / draft-review (Orchestrator)
+**Synthesized by**: Meta_researcher / meta-review (Orchestrator)
 ```
 
 ### File: improved_draft.md
@@ -625,7 +625,7 @@ Follow the **Reviewer Output Template** from Phase 2.
 |---|-----------|-------------------|----------------|
 
 ---
-**Improved by**: Meta_researcher / draft-review
+**Improved by**: Meta_researcher / meta-review
 **Date**: {date}
 ```
 

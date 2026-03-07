@@ -7,35 +7,42 @@ A Claude Code skill set for analyzing research papers (PDF) and supporting acade
 ```
 ┌──────────────────────────────────────────────────────────────────────────┐
 │                                                                          │
-│  📄 Research Paper (PDF)                                                 │
+│  Research Paper (PDF)                                                    │
 │       │                                                                  │
-│       ├──→ 🔬 knowledge-extraction → Knowledge_{topic}/                  │
+│       ├──→ extraction-knowledge → Knowledge_{topic}/                     │
 │       │         (cited knowledge claims)                                 │
 │       │                                                                  │
-│       ├──→ 🧩 logic-extraction → Logic_{topic}/                          │
+│       ├──→ extraction-logic → Logic_{topic}/                             │
 │       │         (structure, argument flow, sentence frames)              │
 │       │                                                                  │
-│       ├──→ 📝 vocab-extraction → Vocab_{topic}/                          │
+│       ├──→ extraction-vocab → Vocab_{topic}/                             │
 │       │         (POS word inventory, technical glossary)                  │
 │       │                                                                  │
-│       ├──→ 🎨 style-guide (Mode A) → Style_{topic}/                     │
+│       ├──→ meta-styling (Mode A) → Style_{topic}/                        │
 │       │         (lexical style patterns)                                 │
 │       │                                                                  │
-│       └──→ ✍️ meta-writing                                               │
+│       └──→ meta-writing                                                  │
 │                 (academic section writing)                                │
 │                    ↓                                                      │
-│              🔍 draft-review                                              │
+│              meta-review                                                 │
 │                 (multi-reviewer draft improvement)                        │
+│              meta-rewriting                                              │
+│                 (one-shot style transfer)                                 │
 │                                                                          │
-│  📊 Dataset + Literature                                                 │
-│       └──→ 🤖 agentic-research                                           │
+│  Dataset + Literature                                                    │
+│       └──→ agentic-research                                              │
 │                 (autonomous data-driven scientific discovery)             │
 │                                                                          │
+│  Naming Convention:                                                      │
+│    extraction-{target} → PDF에서 추출 (knowledge, vocab, logic)          │
+│    meta-{action}       → 글쓰기/스타일 (writing, rewriting, styling,     │
+│                          review)                                         │
+│                                                                          │
 │  Analysis Layer Separation:                                              │
-│    vocab-extraction  → WHAT words are used                               │
-│    style-guide       → HOW words are used                                │
-│    logic-extraction  → HOW arguments are structured                      │
-│    knowledge-extraction → WHAT knowledge is cited                        │
+│    extraction-vocab     → WHAT words are used                            │
+│    meta-styling         → HOW words are used                             │
+│    extraction-logic     → HOW arguments are structured                   │
+│    extraction-knowledge → WHAT knowledge is cited                        │
 │                                                                          │
 └──────────────────────────────────────────────────────────────────────────┘
 ```
@@ -48,23 +55,26 @@ Copy the `skills/` folder to your project's `.claude/skills/` directory, or to `
 
 ```
 ~/.claude/skills/                    # Global (available in all projects)
-├── knowledge-extraction/
+├── extraction-knowledge/
+│   ├── SKILL.md
+│   └── references/extraction_template.md
+├── extraction-vocab/
+│   ├── SKILL.md
+│   └── references/extraction_template.md
+├── extraction-logic/
 │   ├── SKILL.md
 │   └── references/extraction_template.md
 ├── meta-writing/
 │   ├── SKILL.md
 │   ├── writing.local.template.md
 │   └── references/{writing_template,section_guides,citation-and-verification}.md
-├── style-guide/
+├── meta-rewriting/
+│   ├── SKILL.md
+│   └── references/{blueprint-template,journal-styles,output-formats}.md
+├── meta-styling/
 │   ├── SKILL.md
 │   └── references/{extraction_template,revision_guide}.md
-├── logic-extraction/
-│   ├── SKILL.md
-│   └── references/extraction_template.md
-├── vocab-extraction/
-│   ├── SKILL.md
-│   └── references/extraction_template.md
-├── draft-review/
+├── meta-review/
 │   ├── SKILL.md
 │   └── references/review_template.md
 └── agentic-research/
@@ -77,21 +87,22 @@ Copy the `skills/` folder to your project's `.claude/skills/` directory, or to `
 
 ## Skills
 
-### v0.6.0 (Current)
+### v0.7.0 (Current)
 
 | Skill | Description | Output |
 |-------|-------------|--------|
-| knowledge-extraction | Extract cited knowledge into 5 epistemological categories | `Knowledge_{topic}/` |
+| extraction-knowledge | Extract cited knowledge into 5 epistemological categories | `Knowledge_{topic}/` |
+| extraction-vocab | Exhaustive POS word extraction + technical term glossary | `Vocab_{topic}/` |
+| extraction-logic | Extract structure, argument logic, sentence frames | `Logic_{topic}/` |
 | meta-writing | Multi-source academic writing with My Data/Knowledge separation | English + Korean draft |
-| style-guide | Extract lexical style patterns (A) / Revise draft to match (B) | `Style_{topic}/` |
-| logic-extraction | Extract structure, argument logic, sentence frames | `Logic_{topic}/` |
-| vocab-extraction | Exhaustive POS word extraction + technical term glossary | `Vocab_{topic}/` |
-| draft-review | Multi-reviewer draft improvement using logic+vocab extractions | `Review_{timestamp}/` |
+| meta-rewriting | One-shot style transfer from reference paper to user's draft | `Rewrite_{topic}/` |
+| meta-styling | Extract lexical style patterns (A) / Revise draft to match (B) | `Style_{topic}/` |
+| meta-review | Multi-reviewer draft improvement using logic+vocab extractions | `Review_{timestamp}/` |
 | agentic-research | Autonomous data-driven scientific discovery with iterative analysis | `Research_{topic}/` |
 
 ---
 
-## 1. knowledge-extraction
+## 1. extraction-knowledge
 
 Extract core knowledge claims from research paper PDFs, classified into 5 epistemological categories.
 
@@ -110,7 +121,40 @@ Extract core knowledge claims from research paper PDFs, classified into 5 episte
 
 ---
 
-## 2. meta-writing (v0.2.0)
+## 2. extraction-vocab
+
+Exhaustively extract every content word from a paper, organized by section and POS.
+
+- **POS Tables**: Verb, Noun, Adjective, Adverb — per section with frequency and context
+- **Technical Glossary**: Domain, Methodological, Statistical, Chemical, Instrument, Taxonomic terms
+- **Multi-word terms**: Kept as units (not split into individual words)
+- **Cross-section analysis**: Frequency matrix, section-exclusive words, technical term density
+
+```
+> "Extract vocabulary from Weber2021.pdf to Vocab_geochemistry"
+> "Extract technical terms from this paper"
+```
+
+---
+
+## 3. extraction-logic
+
+Extract three layers of analysis from academic papers:
+
+- **Structure Mapping**: Sections → Subsections → Paragraphs hierarchy
+- **Logic Extraction**: Inter-paragraph argument flow + Intra-paragraph sentence logic chains
+- **Sentence Frame Extraction**: Exhaustive rhetorical templates (55+ reference frame types, open taxonomy)
+
+```
+> "Analyze logic structure of Weber2021.pdf"
+> "Extract sentence frames from this paper"
+```
+
+Output: Structure tree, logic flow diagrams, sentence frame catalog with `[P#-S#]` traceability.
+
+---
+
+## 4. meta-writing (v0.2.0)
 
 Multi-source academic section writing with clear separation between user's own data and prior research.
 
@@ -143,7 +187,25 @@ Output: English + Korean dual output, APA 7 references (source-tagged), 4-step v
 
 ---
 
-## 3. style-guide
+## 5. meta-rewriting
+
+One-shot style transfer pipeline: reverse-engineer writing style from a reference paper, generate a Style Blueprint, then apply it to the user's draft in a single session.
+
+- **Style Blueprint**: 6-dimension analysis (Tone, Sentence Architecture, Logical Flow, Transitions, Vocabulary, Citation Style)
+- **Gap Analysis**: Score each dimension 1-10, identify weaknesses
+- **Two modes**: [A] Sentence-level feedback / [B] Full rewrite
+
+```
+> "이 논문처럼 써줘"
+> "Nature Geoscience 스타일로 맞춰줘"
+> "Rewrite my draft in the style of this paper"
+```
+
+Output: `Rewrite_{topic}/` folder with blueprint, gap analysis, and rewritten draft.
+
+---
+
+## 6. meta-styling
 
 Two-mode skill for analyzing and applying academic writing styles.
 
@@ -157,40 +219,7 @@ Two-mode skill for analyzing and applying academic writing styles.
 
 ---
 
-## 4. logic-extraction
-
-Extract three layers of analysis from academic papers:
-
-- **Structure Mapping**: Sections → Subsections → Paragraphs hierarchy
-- **Logic Extraction**: Inter-paragraph argument flow + Intra-paragraph sentence logic chains
-- **Sentence Frame Extraction**: Exhaustive rhetorical templates (55+ reference frame types, open taxonomy)
-
-```
-> "Analyze logic structure of Weber2021.pdf"
-> "Extract sentence frames from this paper"
-```
-
-Output: Structure tree, logic flow diagrams, sentence frame catalog with `[P#-S#]` traceability.
-
----
-
-## 5. vocab-extraction
-
-Exhaustively extract every content word from a paper, organized by section and POS.
-
-- **POS Tables**: Verb, Noun, Adjective, Adverb — per section with frequency and context
-- **Technical Glossary**: Domain, Methodological, Statistical, Chemical, Instrument, Taxonomic terms
-- **Multi-word terms**: Kept as units (not split into individual words)
-- **Cross-section analysis**: Frequency matrix, section-exclusive words, technical term density
-
-```
-> "Extract vocabulary from Weber2021.pdf to Vocab_geochemistry"
-> "Extract technical terms from this paper"
-```
-
----
-
-## 6. draft-review
+## 7. meta-review
 
 Multi-reviewer draft improvement using pre-extracted logic and vocabulary analysis files.
 
@@ -209,7 +238,7 @@ Output: `Review_{timestamp}/` folder with individual reviewer reports, cross-rev
 
 ---
 
-## 7. agentic-research
+## 8. agentic-research
 
 Kosmos-inspired autonomous research framework for iterative data-driven scientific discovery.
 
@@ -232,24 +261,25 @@ Output: `Research_{topic}/` folder with world model, analysis notebooks, and str
 
 ### Full paper analysis
 ```
-1. knowledge-extraction  → extract cited knowledge
-2. vocab-extraction      → build word inventory + technical glossary
-3. logic-extraction      → map argument structure + sentence frames
-4. style-guide (Mode A)  → extract stylistic patterns
+1. extraction-knowledge  → extract cited knowledge
+2. extraction-vocab      → build word inventory + technical glossary
+3. extraction-logic      → map argument structure + sentence frames
+4. meta-styling (Mode A) → extract stylistic patterns
 ```
 
 ### Academic writing
 ```
 1. meta-writing          → draft sections using My Data + Knowledge + PDF + Web
-2. draft-review          → multi-reviewer improvement using logic+vocab extractions
-3. style-guide (Mode B)  → revise draft to match target journal style
+2. meta-review           → multi-reviewer improvement using logic+vocab extractions
+3. meta-styling (Mode B) → revise draft to match target journal style
+4. meta-rewriting        → one-shot style transfer from reference paper
 ```
 
 ### Autonomous research
 ```
 1. agentic-research      → iterative data analysis + literature grounding
 2. meta-writing          → write up findings with proper citations
-3. draft-review          → review and improve the manuscript
+3. meta-review           → review and improve the manuscript
 ```
 
 ---
@@ -275,6 +305,12 @@ Style_{topic}/              # Style data banks
 ├── Weber2021_style.md
 └── cross_section_matrix.md
 
+Rewrite_{topic}/            # One-shot style transfer output
+├── blueprint.md
+├── gap_analysis.md
+├── rewritten_draft.md
+└── session_log.md
+
 Review_{YYYYMMDD_HHMMSS}/  # Draft review reports
 ├── input.md
 ├── reviewer_1.md
@@ -292,20 +328,25 @@ Research_{topic}/           # Agentic research output
 
 ## Version History
 
-### v0.6.0 (Current)
+### v0.7.0 (Current)
+- Added meta-rewriting skill (one-shot style transfer pipeline)
+- Renamed skills for consistency: extraction-{target} + meta-{action} convention
+- Updated all cross-references across skills, CLAUDE.md, and README
+
+### v0.6.0
 - Added agentic-research skill (autonomous data-driven scientific discovery)
 - Upgraded meta-writing to v0.2.0: My Data/Knowledge separation, universal (non-domain-specific), writing.local.md config, citation-and-verification, Glob support
 
 ### v0.5.0
-- Added draft-review skill (multi-reviewer draft improvement with four academic writing principles)
+- Added meta-review skill (multi-reviewer draft improvement with four academic writing principles)
 
 ### v0.4.0
-- Added logic-extraction skill (structure, argument logic, sentence frames)
-- Added vocab-extraction skill (exhaustive POS extraction, technical glossary)
+- Added extraction-logic skill (structure, argument logic, sentence frames)
+- Added extraction-vocab skill (exhaustive POS extraction, technical glossary)
 - Added CLAUDE.md project instructions
 
 ### v0.3.0
-- Added style-guide skill (Mode A extraction, Mode B revision)
+- Added meta-styling skill (Mode A extraction, Mode B revision)
 
 ### v0.2.1
 - Added reference verification to meta-writing
@@ -314,7 +355,7 @@ Research_{topic}/           # Agentic research output
 - Added meta-writing skill
 
 ### v0.1.0
-- Initial knowledge-extraction skill
+- Initial extraction-knowledge skill
 
 ---
 

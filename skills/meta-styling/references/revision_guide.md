@@ -306,7 +306,7 @@ You are a scientific writing revision specialist. Your task is to compare a user
 - [추가 참고 논문 제안]
 
 ---
-**Revised by**: Meta_researcher / style-guide (Mode B)
+**Revised by**: Meta_researcher / meta-styling (Mode B)
 **Data Bank**: {경로}
 **Date**: {날짜}
 ```

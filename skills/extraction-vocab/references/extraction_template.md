@@ -341,7 +341,7 @@ Words that appear **only** in one section.
 [Phase 5a output]
 
 ---
-**Extracted by**: Meta_researcher / vocab-extraction
+**Extracted by**: Meta_researcher / extraction-vocab
 **Date**: {date}
 ```
 

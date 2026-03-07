@@ -1,5 +1,5 @@
 ---
-name: draft-review
+name: meta-review
 description: |
   Review and improve user's draft (paragraph/section) against multiple reference paper
   extraction files (logic + vocab). Per-paper Reviewer subagents evaluate the draft
@@ -39,8 +39,8 @@ Output: Review_{timestamp}/ folder with all reports + improved draft
 - Improved draft is a **complete rewrite**, not patchwork of individual changes
 
 **Relationship to Other Skills:**
-- **Downstream consumer** of `logic-extraction` and `vocab-extraction` outputs
-- **Complementary** to `style-guide Mode B`: style-guide uses style databank; draft-review uses logic+vocab extraction files
+- **Downstream consumer** of `extraction-logic` and `extraction-vocab` outputs
+- **Complementary** to `meta-styling Mode B`: meta-styling uses style databank; meta-review uses logic+vocab extraction files
 
 ---
 
@@ -292,7 +292,7 @@ Follow the Reviewer Output Template in review_template.md exactly.
 
 | Situation | Response |
 |-----------|----------|
-| No extraction files found | Guide user to run `logic-extraction` / `vocab-extraction` first |
+| No extraction files found | Guide user to run `extraction-logic` / `extraction-vocab` first |
 | Only logic files (no vocab) or vice versa | Proceed with available files + warn about limited scope |
 | Section type unclear | Ask user to specify |
 | Draft too short (< 2 sentences) | Warn: "Paragraph-level or longer text recommended" |
@@ -339,4 +339,4 @@ Follow the Reviewer Output Template in review_template.md exactly.
 ---
 
 **Version**: 2.0.0
-**Skill by**: Meta_researcher / draft-review
+**Skill by**: Meta_researcher / meta-review

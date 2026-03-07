@@ -328,7 +328,7 @@ Style_{주제}/
     "journal": "",
     "year": 0,
     "field": "",
-    "extracted_by": "Meta_researcher/style-guide",
+    "extracted_by": "Meta_researcher/meta-styling",
     "extracted_date": ""
   },
   "sections": {

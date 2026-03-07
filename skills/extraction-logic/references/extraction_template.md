@@ -589,7 +589,7 @@ The complete markdown file structure:
 [Phase 5a output]
 
 ---
-**Extracted by**: Meta_researcher / logic-extraction
+**Extracted by**: Meta_researcher / extraction-logic
 **Date**: {date}
 ```
 

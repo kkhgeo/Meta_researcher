@@ -1,228 +1,228 @@
 ---
 name: meta-writing
 description: |
-  다중 소스 기반 학술 논문 섹션 작성 스킬.
-  본 연구 데이터(My Data: 그림, 표, 데이터 파일)와 선행연구 지식(Knowledge, PDF, Web)을
-  명확히 구분하여 IMRaD 섹션별 글쓰기를 수행한다.
-  5-Loop 프로세스로 소스 탐색 → 내 데이터 분석 → 갭 보완 → 글쓰기 → 검증을 진행하며,
-  영어+한국어 이중 출력과 APA 7 인용을 지원한다.
-  사용 시점: "글쓰기", "섹션 작성", "선행연구 정리", "Results 써줘", "Discussion 작성",
-  "이 그림 기반으로 써줘", "Knowledge 기반으로 글써줘", "Figure 해석해줘" 요청 시 반드시 사용.
+  Multi-source academic paper section writing skill.
+  Clearly separates original research data (My Data: figures, tables, data files) from
+  prior literature knowledge (Knowledge, PDF, Web) to perform IMRaD section-specific writing.
+  Uses a 5-Loop process: source exploration -> data analysis -> gap filling -> writing -> verification,
+  with bilingual (English + Korean) output and APA 7 citations.
+  Trigger phrases: "글쓰기", "섹션 작성", "선행연구 정리", "Results 써줘", "Discussion 작성",
+  "이 그림 기반으로 써줘", "Knowledge 기반으로 글써줘", "Figure 해석해줘" — activate this skill upon these requests.
 allowed-tools: [Read, Write, Edit, Glob, Task, WebSearch, WebFetch]
 ---
 
 # Meta Writing Skill
 
-## 개요
+## Overview
 
-본 연구 데이터(My Data)와 선행연구 지식(Knowledge Sources)을 결합하여
-학술 논문 섹션을 작성한다.
+Combines original research data (My Data) with prior literature knowledge (Knowledge Sources)
+to write academic paper sections.
 
-**두 종류의 정보를 명확히 구분한다:**
+**Two types of information are clearly distinguished:**
 
-| 구분 | My Data (본 연구) | Knowledge Sources (선행연구) |
-|------|-------------------|---------------------------|
-| 정체 | 내가 생산한 데이터 | 선행연구에서 가져온 지식 |
-| 예시 | Figure, Table, CSV | Knowledge MD, PDF, Web |
-| 글에서 역할 | 기술·해석 대상 | 비교·근거 |
-| Results | "본 연구에서 ~을 보였다 (Figure 1)" | "(Chen et al., 2024)과 유사하다" |
-| Discussion | "관찰된 패턴은 ~을 시사한다" | "Chen(2024)의 모델로 설명된다" |
+| Category | My Data (Original Research) | Knowledge Sources (Prior Literature) |
+|----------|---------------------------|--------------------------------------|
+| Identity | Data produced by the researcher | Knowledge drawn from prior studies |
+| Examples | Figure, Table, CSV | Knowledge MD, PDF, Web |
+| Role in text | Subject of description/interpretation | Basis for comparison/evidence |
+| Results | "This study showed ~ (Figure 1)" | "Similar to (Chen et al., 2024)" |
+| Discussion | "The observed pattern suggests ~" | "Explained by Chen (2024)'s model" |
 
-**Knowledge Sources 우선순위:**
-1. Knowledge 폴더 (마크다운) — 이미 구조화된 지식, 항상 1순위
-2. PDF 폴더 — Knowledge에 없는 논문 보완
-3. Web 검색 — 최신 정보 또는 갭 보완
-
----
-
-## 프로젝트 설정 로드
-
-작업 시작 전 현재 디렉토리에서 `writing.local.md`를 탐색한다.
-
-- **있으면**: 설정 로드 후 사용자에게 요약 제시하고 확인 받는다.
-- **없으면**: `writing.local.template.md`를 복사하여 `writing.local.md`를 생성하도록 안내한다. 사용자가 거부하면 소스 경로를 직접 질문한다.
-- **사용자가 명시적으로 경로를 지정하면**: writing.local.md보다 우선한다.
+**Knowledge Sources Priority:**
+1. Knowledge folder (markdown) — Already structured knowledge, always first priority
+2. PDF folder — Supplements papers not covered by Knowledge
+3. Web search — Latest information or gap filling
 
 ---
 
-## 입력 파싱 (Phase 1)
+## Project Settings Load
 
-사용자 요청을 분석하여 아래 항목을 결정한다.
-파싱 완료 후 사용자에게 확인을 받고 진행한다.
+Before starting, search for `writing.local.md` in the current directory.
+
+- **If found**: Load settings and present a summary to the user for confirmation.
+- **If not found**: Guide the user to copy `writing.local.template.md` to create `writing.local.md`. If the user declines, ask for source paths directly.
+- **If the user explicitly specifies paths**: These take priority over writing.local.md.
+
+---
+
+## Input Parsing (Phase 1)
+
+Analyze the user request to determine the items below.
+After parsing, confirm with the user before proceeding.
 
 ```xml
 <task_spec>
-Core topic: [주제]
+Core topic: [topic]
 Section: [Introduction/Methods/Results/Discussion]
-Scope: [전체 섹션/특정 부분]
-Focus: [관점/목표]
-Request type: [주제/그림/표]
+Scope: [full section/specific part]
+Focus: [perspective/objective]
+Request type: [topic/figure/table]
 
 My Data:
-  figures: [파일 경로 목록, 섹션 배치]
-  tables: [파일 경로 목록, 섹션 배치]
-  data_files: [파일 경로 목록]
+  figures: [file path list, section placement]
+  tables: [file path list, section placement]
+  data_files: [file path list]
 
 Knowledge Sources:
-  knowledge_folder: [경로 또는 "없음"]
-  pdf_folder: [경로 또는 "없음"]
+  knowledge_folder: [path or "none"]
+  pdf_folder: [path or "none"]
   web_search: [allowed/not allowed]
 
 Settings:
-  min_citations: [숫자, 기본 5]
-  paragraphs: [1-3, 기본 2]
+  min_citations: [number, default 5]
+  paragraphs: [1-3, default 2]
   words_per_paragraph: [150-250]
   citation_style: APA 7
   language: [bilingual/english/korean]
 </task_spec>
 ```
 
-### 섹션 확인
+### Section Reference
 
-| 섹션 | 포함 내용 | My Data 역할 | Knowledge 역할 |
-|------|----------|-------------|----------------|
-| Introduction | 배경, 선행연구, 갭, 목적 | 거의 없음 | 주요 (선행연구 종합) |
-| Methods | 방법, 기법, 시료 | 시료·기기 정보 | 방법론 참조·인용 |
-| Results | 데이터 제시, 비교 | **주요** (기술 대상) | 비교 대상 |
-| Discussion | 해석, 함의, 한계 | **주요** (해석 대상) | 해석 근거 |
+| Section | Content | My Data Role | Knowledge Role |
+|---------|---------|-------------|----------------|
+| Introduction | Background, prior research, gap, objectives | Minimal | Primary (synthesis of prior research) |
+| Methods | Methods, techniques, samples | Sample/instrument information | Methodology references/citations |
+| Results | Data presentation, comparison | **Primary** (subject of description) | Comparison target |
+| Discussion | Interpretation, implications, limitations | **Primary** (subject of interpretation) | Basis for interpretation |
 
 ---
 
-## 지식 탐색 및 분석 (Phase 2)
+## Knowledge Exploration and Analysis (Phase 2)
 
-5-Loop 프로세스로 소스를 탐색하고 분석한다.
+Explore and analyze sources using the 5-Loop process.
 
-→ **상세 절차**: `references/writing_template.md`의 Loop 1~4 섹션을 읽고 따른다.
+> **Detailed procedure**: Read and follow the Loop 1-4 sections of `references/writing_template.md`.
 
-### 루프 요약
+### Loop Summary
 
 ```
-Loop 1: 소스 스캔 및 계획
-  - writing.local.md 로드 (있으면)
-  - My Data 폴더 확인 (그림/표/데이터 목록)
-  - Knowledge 폴더 확인 (index.md, 관련 파일 선별)
-  - PDF 폴더 확인
-  - 탐색 계획 수립
+Loop 1: Source Scan and Planning
+  - Load writing.local.md (if available)
+  - Check My Data folder (list figures/tables/data)
+  - Check Knowledge folder (index.md, select relevant files)
+  - Check PDF folder
+  - Establish exploration plan
 
-Loop 2: Knowledge 읽기
-  - 선별된 Knowledge 마크다운 파일 읽기 (최대 5개)
-  - Claim + Citation 쌍 추출
-  - 중간 결과 A
+Loop 2: Knowledge Reading
+  - Read selected Knowledge markdown files (up to 5)
+  - Extract Claim + Citation pairs
+  - Intermediate Result A
 
-Loop 3: 내 데이터 분석 + 추가 소스
-  - My Data 그림/표 분석 (패턴, 수치 추출)
-  - 내 데이터와 Knowledge 비교 쌍 생성
-  - 추가 Knowledge/PDF 읽기
-  - 중간 결과 B
+Loop 3: My Data Analysis + Additional Sources
+  - Analyze My Data figures/tables (extract patterns, values)
+  - Generate comparison pairs between My Data and Knowledge
+  - Read additional Knowledge/PDF files
+  - Intermediate Result B
 
-Loop 4: 갭 체크 + Web 검색
-  - 인용 수, 주제 커버, 최신 연구, 비교 데이터 확인
-  - 부족하면 Web 검색으로 보완 (허용된 경우)
-  - 중간 결과 C + 갭 보고서
+Loop 4: Gap Check + Web Search
+  - Verify citation count, topic coverage, recent research, comparison data
+  - If insufficient, supplement with Web search (if allowed)
+  - Intermediate Result C + Gap Report
 ```
 
-### 갭 체크 기준
+### Gap Check Criteria
 
-| 갭 유형 | 판단 기준 | 대응 |
-|---------|----------|------|
-| 인용 수 부족 | 최소 인용 수 미달 | PDF/Web 추가 탐색 |
-| 비교 데이터 부족 | 내 데이터 패턴에 대응할 선행연구 없음 | Web 검색 |
-| 최신 연구 부족 | 2023년 이후 연구 없음 | Web 검색 |
-| 해석 근거 부족 | Discussion에서 인용할 이론/메커니즘 없음 | PDF/Web 검색 |
-
----
-
-## 글쓰기 (Phase 3)
-
-→ **5-Loop 상세**: `references/writing_template.md`의 Loop 5 섹션을 따른다.
-→ **섹션별 구조·전환어·예시**: `references/section_guides.md`의 해당 섹션을 읽는다.
-
-### 핵심 규칙
-
-**My Data vs Knowledge 구분 원칙:**
-- My Data는 인용 없이 직접 기술한다. "(Figure 1)", "(Table 2)" 형태로 참조.
-- Knowledge Sources는 반드시 (Author, Year) 형태로 인용한다.
-- 한 문장에 My Data와 Knowledge를 혼합할 때, 어느 것이 본 연구이고 어느 것이 선행연구인지 명확히 한다.
-
-**단락 작성 규칙:**
-1. Topic sentence: 중심 주장으로 시작
-2. Evidence: 최소 3개 인용으로 뒷받침 (Knowledge Sources)
-3. Transitions: 자연스러운 연결어 (section_guides.md 참조)
-4. Concluding sentence: 함의 또는 다음 단락 연결
-5. Source diversity: 가능하면 다양한 소스 유형 혼합
-
-**이중 언어 출력:**
-- 영어 먼저, 한국어 번역 뒤에
-- 학술 용어 일관성 유지
-- 한국어에서도 (Author, Year) 인용은 영어로 유지
+| Gap Type | Judgment Criteria | Response |
+|----------|------------------|----------|
+| Insufficient citations | Below minimum citation count | Additional PDF/Web search |
+| Insufficient comparison data | No prior studies matching My Data patterns | Web search |
+| Insufficient recent research | No studies after 2023 | Web search |
+| Insufficient interpretation basis | No theories/mechanisms to cite in Discussion | PDF/Web search |
 
 ---
 
-## 검증 (Phase 4)
+## Writing (Phase 3)
 
-→ **상세 절차**: `references/citation-and-verification.md` 전체를 읽고 따른다.
+> **5-Loop details**: Follow the Loop 5 section of `references/writing_template.md`.
+> **Section-specific structure, transitions, examples**: Read the corresponding section in `references/section_guides.md`.
 
-### 검증 요약
+### Core Rules
+
+**My Data vs Knowledge Distinction Principle:**
+- My Data is described directly without citations. Reference as "(Figure 1)", "(Table 2)".
+- Knowledge Sources must always be cited in (Author, Year) format.
+- When mixing My Data and Knowledge in a single sentence, clearly indicate which is original research and which is prior literature.
+
+**Paragraph Writing Rules:**
+1. Topic sentence: Begin with the central claim
+2. Evidence: Support with at least 3 citations (Knowledge Sources)
+3. Transitions: Use natural connectors (refer to section_guides.md)
+4. Concluding sentence: State implications or connect to the next paragraph
+5. Source diversity: Mix different source types when possible
+
+**Bilingual Output:**
+- English first, followed by Korean translation
+- Maintain consistency of academic terminology
+- Keep (Author, Year) citations in English even in Korean text
+
+---
+
+## Verification (Phase 4)
+
+> **Detailed procedure**: Read and follow `references/citation-and-verification.md` in its entirety.
+
+### Verification Summary
 
 ```
-Step 1: 인용-참고문헌 매칭 (본문 인용 ↔ References)
-Step 2: APA 7 형식 검증 (필수 필드, 포맷)
-Step 3: 소스별 검증 (Knowledge 원본 대조, PDF 메타데이터, Web URL)
-Step 4: 검증 보고서 생성 (Quality Score 포함)
+Step 1: Citation-Reference matching (in-text citations <-> References)
+Step 2: APA 7 format verification (required fields, formatting)
+Step 3: Source-specific verification (Knowledge original cross-check, PDF metadata, Web URL)
+Step 4: Generate verification report (including Quality Score)
 ```
 
-### 검증 체크 항목
-- [ ] 모든 본문 인용이 References에 존재
-- [ ] 고아 참고문헌 없음
-- [ ] APA 7 형식 준수
-- [ ] My Data 참조(Figure/Table)가 실제 파일과 일치
-- [ ] DOI/URL/연도/저자 조작 없음
+### Verification Checklist
+- [ ] All in-text citations exist in References
+- [ ] No orphan references
+- [ ] APA 7 format compliance
+- [ ] My Data references (Figure/Table) match actual files
+- [ ] No fabrication of DOI/URL/year/author
 
 ---
 
-## 출력 형식
+## Output Format
 
-→ **상세 템플릿**: `references/writing_template.md`의 "출력 형식 상세" 섹션 참조.
+> **Detailed template**: Refer to the "Output Format Details" section in `references/writing_template.md`.
 
-모든 출력은 아래 6개 섹션으로 구성한다:
+All output consists of the following 6 sections:
 
-| 섹션 | 내용 |
-|------|------|
-| A) Approach Checklist | 수행 작업 3~8단계 요약 (영어 + 한국어) |
-| B) Source Summary | 소스 유형별 요약 + 갭 보고 |
-| C) Main Text | 영어 단락 + 한국어 번역 |
-| D) References | APA 7, 소스 유형별 구분 |
-| E) Self-Assessment | 품질 체크리스트 |
-| F) Verification Report | 레퍼런스 검증 보고서 |
-
----
-
-## 제약 조건
-
-### 인용 엄격성
-- DOI/URL/연도/저자 조작 절대 금지
-- 불명확한 필드: `[missing: field]`로 표기
-- Web 검색 결과는 출처·접근일 명시 필수
-
-### 품질 기준
-- 단락당 최소 3개 Knowledge 인용
-- 단일 소스 과의존 금지
-- 가능하면 다양한 소스 유형 혼합
-
-### My Data 취급
-- 내 데이터를 선행연구처럼 인용하지 않는다
-- Figure/Table 번호를 정확히 유지한다
-- 데이터 수치를 임의로 변경하지 않는다
+| Section | Content |
+|---------|---------|
+| A) Approach Checklist | 3-8 step task summary (English + Korean) |
+| B) Source Summary | Summary by source type + gap report |
+| C) Main Text | English paragraphs + Korean translation |
+| D) References | APA 7, organized by source type |
+| E) Self-Assessment | Quality checklist |
+| F) Verification Report | Reference verification report |
 
 ---
 
-## References 파일 안내
+## Constraints
 
-| 파일 | 참조 시점 | 내용 |
-|------|----------|------|
-| `references/writing_template.md` | Phase 2~3 | 5-Loop 상세 절차, 소스별 처리, 출력 형식 상세 |
-| `references/section_guides.md` | Phase 3 | IMRaD 섹션별 구조, 전환어, 예시, 그림/표 해석 |
-| `references/citation-and-verification.md` | Phase 4 | 인용 표기, APA 7, 검증 절차, 보고서 템플릿 |
+### Citation Strictness
+- Absolutely no fabrication of DOI/URL/year/author
+- Uncertain fields: Mark as `[missing: field]`
+- Web search results must include source and access date
+
+### Quality Standards
+- Minimum 3 Knowledge citations per paragraph
+- No over-reliance on a single source
+- Mix different source types when possible
+
+### My Data Handling
+- Do not cite original data as if it were prior literature
+- Maintain accurate Figure/Table numbers
+- Do not arbitrarily alter data values
+
+---
+
+## References File Guide
+
+| File | When to Reference | Content |
+|------|-------------------|---------|
+| `references/writing_template.md` | Phase 2-3 | 5-Loop detailed procedure, source-specific handling, output format details |
+| `references/section_guides.md` | Phase 3 | IMRaD section-specific structure, transitions, examples, figure/table interpretation |
+| `references/citation-and-verification.md` | Phase 4 | Citation formatting, APA 7, verification procedure, report template |
 
 ---
 

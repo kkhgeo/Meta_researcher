@@ -1,5 +1,5 @@
 ---
-name: logic-extraction
+name: extraction-logic
 description: |
   Systematically extract structure (sections/paragraphs), argument logic
   (inter-paragraph and intra-paragraph), and sentence frames (rhetorical templates)
@@ -22,7 +22,7 @@ Extracts three layers of analysis from academic papers:
 - **Logic Extraction**: Map argument flow between paragraphs (inter-paragraph) and between sentences within paragraphs (intra-paragraph)
 - **Sentence Frame Extraction**: Abstract reusable rhetorical templates from every sentence — capturing the **form/shape** of sentences, not specific words
 
-**Difference from style-guide**: style-guide extracts *"which words and expressions are used"* (surface). logic-extraction extracts *"how the argument is structured and flows"* (deep).
+**Difference from meta-styling**: meta-styling extracts *"which words and expressions are used"* (surface). extraction-logic extracts *"how the argument is structured and flows"* (deep).
 
 ---
 
@@ -141,7 +141,7 @@ Exhaustive collection of ALL sentence forms
 - Sentence frame distribution
 
 ---
-**Extracted by**: Meta_researcher / logic-extraction
+**Extracted by**: Meta_researcher / extraction-logic
 **Date**: {date}
 ```
 
@@ -198,19 +198,19 @@ User: "Analyze logic structure of these 3 papers"
 
 ---
 
-## Integration with style-guide
+## Integration with meta-styling
 
 ```
-logic-extraction → Argument structure + sentence frames (HOW the argument flows)
-style-guide      → Vocabulary + expressions + tense/voice (HOW the words sound)
+extraction-logic → Argument structure + sentence frames (HOW the argument flows)
+meta-styling      → Vocabulary + expressions + tense/voice (HOW the words sound)
 
 Combined workflow:
-1. logic-extraction: understand argument structure and sentence templates
-2. style-guide: understand lexical and stylistic patterns
+1. extraction-logic: understand argument structure and sentence templates
+2. meta-styling: understand lexical and stylistic patterns
 3. When writing: reference logic structure (logic) + expression style (style) together
 ```
 
 ---
 
 **Version**: 1.0.0
-**Skill**: Meta_researcher / logic-extraction
+**Skill**: Meta_researcher / extraction-logic
