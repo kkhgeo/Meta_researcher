@@ -2,41 +2,41 @@
 
 ## 데이터 소스
 
-### My Data (본 연구)
-my_data_folder: ./my_data/
+| 항목 | 경로 | 설명 |
+|------|------|------|
+| my_data_folder | ./my_data/ | 본 연구 데이터 (figures/, tables/, data/) |
+| knowledge_folder | ./knowledge/ | Knowledge 마크다운 파일 |
+| pdf_folder | ./papers/ | PDF 논문 파일 |
+| web_search | allowed | Web 검색 허용 여부 (allowed / not_allowed) |
 
-### Knowledge Sources (선행연구)
-knowledge_folder: ./knowledge/
-pdf_folder: ./papers/
-web_search: allowed
+## 그림 매핑 (Figures)
 
-## 그림·표 매핑
+| ID | 파일 경로 | 섹션 | 순서 | 설명 |
+|----|----------|------|------|------|
+| fig1 | ./my_data/figures/ | Results | 1 | |
+| fig2 | ./my_data/figures/ | Results | 2 | |
 
-### Figures
-# - fig1: ./my_data/figures/[파일명]
-#     section: Results
-#     order: 1
-#     description: "[그림 설명]"
-# - fig2: ./my_data/figures/[파일명]
-#     section: Results
-#     order: 2
-#     description: "[그림 설명]"
+## 표 매핑 (Tables)
 
-### Tables
-# - table1: ./my_data/tables/[파일명]
-#     section: Results
-#     order: 1
-#     description: "[표 설명]"
+| ID | 파일 경로 | 섹션 | 순서 | 설명 |
+|----|----------|------|------|------|
+| table1 | ./my_data/tables/ | Results | 1 | |
 
 ## 글쓰기 설정
-default_language: bilingual
-min_citations: 5
-paragraphs_per_section: 2-3
-words_per_paragraph: 150-250
-citation_style: APA 7
 
-## 프로젝트 맥락 (선택)
-# research_topic: [연구 주제]
-# target_journal: [목표 저널]
-# key_variables: [핵심 변수/개념]
-# study_area: [연구 지역/대상]
+| 항목 | 값 | 비고 |
+|------|-----|------|
+| default_language | bilingual | bilingual / english / korean |
+| min_citations | 5 | 단락당 최소 인용 수 |
+| paragraphs_per_section | 2-3 | 섹션당 단락 수 |
+| words_per_paragraph | 150-250 | 단락당 단어 수 |
+| citation_style | APA 7 | APA 7 고정 |
+
+## 프로젝트 맥락
+
+| 항목 | 값 |
+|------|-----|
+| research_topic | |
+| target_journal | |
+| key_variables | |
+| study_area | |

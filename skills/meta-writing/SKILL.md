@@ -8,7 +8,7 @@ description: |
   with bilingual (English + Korean) output and APA 7 citations.
   Trigger phrases: "글쓰기", "섹션 작성", "선행연구 정리", "Results 써줘", "Discussion 작성",
   "이 그림 기반으로 써줘", "Knowledge 기반으로 글써줘", "Figure 해석해줘" — activate this skill upon these requests.
-allowed-tools: [Read, Write, Edit, Glob, Task, WebSearch, WebFetch]
+allowed-tools: [Read, Write, Edit, Glob, Task, Agent, WebSearch, WebFetch]
 ---
 
 # Meta Writing Skill
@@ -197,6 +197,53 @@ All output consists of the following 6 sections:
 
 ---
 
+## Parallel Processing (Subagent)
+
+소스가 많을 때 Loop 2-4를 병렬로 실행하여 속도를 높인다.
+
+### 병렬 가능 작업
+
+| 작업 | 병렬화 | 방법 |
+|------|--------|------|
+| Knowledge 파일 여러 개 읽기 | Yes | 파일당 Subagent 동시 실행 |
+| PDF 여러 개 읽기 | Yes | 파일당 Subagent 동시 실행 |
+| My Data 분석 (Figure + Table) | Yes | 유형별 Subagent 동시 실행 |
+| Web 검색 (쿼리 여러 개) | Yes | 쿼리당 Subagent 동시 실행 |
+| 글쓰기 (Loop 5) | No | 소스 통합 후 순차 |
+| 검증 (Phase 4) | No | 글쓰기 결과 의존 |
+
+### 병렬 실행 조건
+
+- Knowledge 파일 3개 이상 → 병렬 읽기 권장
+- PDF 2개 이상 → 병렬 읽기 권장
+- Figure + Table 동시 존재 → 병렬 분석 권장
+- 소스 1-2개 → 순차 실행 (오버헤드 불필요)
+
+### Subagent Prompt Template (Knowledge Reading)
+
+```
+당신은 학술 Knowledge 파일 분석 전문가입니다.
+
+다음 Knowledge 마크다운 파일에서 주제 "[topic]"과 관련된
+Claim + Citation 쌍을 추출하세요.
+
+카테고리 분류:
+- Theoretical Foundations
+- Empirical Precedents
+- Methodological Heritage
+- Contextual Knowledge
+- Critical Discourse
+
+파일:
+[파일 내용 삽입]
+
+출력 형식:
+| Claim | Citation | Category | Source |
+|-------|----------|----------|--------|
+```
+
+---
+
 ## Constraints
 
 ### Citation Strictness
@@ -226,4 +273,4 @@ All output consists of the following 6 sections:
 
 ---
 
-**Version**: 0.2.0
+**Version**: 1.0.0

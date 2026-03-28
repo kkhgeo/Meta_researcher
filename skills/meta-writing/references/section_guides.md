@@ -323,6 +323,97 @@ values] in [different context]."
 
 ---
 
+## 5. Abstract
+
+### 목적
+연구의 핵심을 250단어 이내로 압축 (배경, 목적, 방법, 결과, 결론)
+
+### 구조
+
+```
+문장 1-2: 배경 및 연구 필요성
+  - 광범위한 맥락 → 구체적 문제
+  - Knowledge 카테고리: Contextual Knowledge
+
+문장 3: 연구 목적
+  - "This study investigated/examined/aimed to..."
+  - 명확한 목적 1문장
+
+문장 4-5: 방법 요약
+  - 핵심 방법만 (시료 수, 주요 분석 기법)
+  - 과거 수동태
+
+문장 6-8: 주요 결과
+  - My Data: 핵심 수치 + 패턴 (2-3개)
+  - 가장 중요한 발견만 선택
+
+문장 9-10: 결론 및 의의
+  - 결과의 함의
+  - "These findings suggest/demonstrate that..."
+```
+
+### 전환어
+
+| 영어 | 한국어 | 용도 |
+|------|--------|------|
+| Here, we | 본 연구에서는 | 목적 제시 |
+| Our results show | 결과는 ~을 보여주었다 | 핵심 결과 |
+| These findings suggest | 이 결과는 ~을 시사한다 | 결론/함의 |
+
+### Abstract 작성 규칙
+
+- 인용 없음 (일반적으로 Abstract에는 인용하지 않음)
+- 약어 최소화 (첫 등장 시 풀어쓰기)
+- 구체적 수치 포함 (범위, 주요 값)
+- 과대 표현 금지 ("first ever", "groundbreaking" 등)
+
+---
+
+## 6. Conclusion
+
+### 목적
+연구의 주요 발견을 요약하고 학술적/실용적 함의를 제시
+
+### 구조
+
+```
+단락 1: 주요 발견 요약
+  - 연구 목적 재진술 (간략히)
+  - 핵심 발견 3-5개 요약 (결과 반복이 아닌 종합)
+  - My Data: 가장 중요한 패턴/수치
+  - "This study demonstrated/revealed that..."
+
+단락 2: 함의 및 기여
+  - 이론적 기여: 기존 이해에 어떤 새로운 통찰을 더했는가
+  - 실용적 기여: 정책/관리/응용에 어떤 시사점이 있는가
+  - Knowledge 카테고리: Contextual Knowledge
+
+단락 3: 한계점 및 향후 연구 (선택)
+  - 연구의 주요 한계 1-2개 (솔직하지만 간결하게)
+  - 향후 연구 방향 제안
+  - "Future studies should focus on..."
+```
+
+### 전환어
+
+| 영어 | 한국어 | 용도 |
+|------|--------|------|
+| In conclusion | 결론적으로 | 시작 |
+| This study demonstrated | 본 연구는 ~을 입증하였다 | 발견 요약 |
+| These findings contribute to | 이 결과는 ~에 기여한다 | 기여 진술 |
+| Despite these limitations | 이러한 한계에도 불구하고 | 한계 인정 |
+| Future research should | 향후 연구는 ~해야 한다 | 제안 |
+
+### Conclusion 작성 규칙
+
+- 새로운 데이터나 결과를 도입하지 않음 (Discussion/Results에서 이미 다룬 내용만)
+- 인용 최소화 (0-2개, 맥락 설정 시에만)
+- 과대 해석 금지 — hedging 유지
+- 연구 질문에 대한 답을 명확히 제공
+- Introduction의 gap statement와 대응되어야 함
+
+---
+
 ## 공통 주의사항
 
 ### 인용 밀도 (Knowledge Sources 기준)
@@ -373,4 +464,4 @@ values] in [different context]."
 
 ---
 
-**Version**: 0.2.0
+**Version**: 1.0.0
