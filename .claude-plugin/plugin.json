@@ -1,7 +1,7 @@
 {
   "name": "meta-researcher",
   "description": "Academic paper analysis and writing toolkit. Extract knowledge, analyze structure/logic/vocabulary/style from research papers (PDF), and support academic writing with multi-reviewer draft improvement.",
-  "version": "0.6.0",
+  "version": "0.7.1",
   "author": {
     "name": "KKH"
   },
