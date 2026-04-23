@@ -107,7 +107,75 @@ If a paragraph's sentences cannot be connected into a single coherent claim, the
 
 ---
 
-## 5. Agent Diagnostic Questions
+## 5. Terminological Consistency (The Banana Rule)
+
+> **Source:** Sainani, *Writing in the Sciences* — "Do not call a banana an elongated yellow fruit."
+
+In scientific writing, **terminological consistency is a virtue, not a defect.** Readers of literary prose may welcome synonym variation as a sign of a rich vocabulary; readers of a research paper interpret synonym variation as **a signal that the writer is referring to a new category**. Switching between "obese group" and "heavier group," or between "freeze-thaw treatment" and "F-T regime," forces the reader to ask: *Is this the same thing, or has the writer introduced a new variable?*
+
+Lexical repetition is the **dominant cohesive device** in expert scientific text (see §3 above). The Banana Rule extends this principle from sentence-to-sentence cohesion to **document-wide terminological discipline**.
+
+### 5a. The audit procedure
+
+The agent should:
+1. Extract all **key technical terms** from the **Methods section**:
+   - Group/condition names
+   - Variable names
+   - Technique names
+   - Defined acronyms
+2. Verify that the **exact same terms** appear in **Results**, **Discussion**, **Tables**, and **Figure captions**
+3. Flag every instance where a **synonym was substituted** for a defined term
+
+### 5b. Common violations
+
+❌ Methods: "obese group (BMI ≥ 30)"
+❌ Results: "the heavier participants showed..."
+❌ Discussion: "high-BMI individuals demonstrated..."
+
+The reader cannot tell whether all three refer to the same group. The agent flags **MEDIUM** and recommends collapsing to a single defined term.
+
+❌ Methods: "freeze-thaw treatment (FT)"
+❌ Results: "the F-T regime caused..."
+❌ Discussion: "frost cycling led to..."
+
+Three different forms of the same condition. The agent flags **MEDIUM** and recommends one canonical form (preferably the defined acronym after first use).
+
+### 5c. When variation is appropriate
+
+- **First introduction → defined acronym** ("freeze-thaw treatment (hereafter, FT)") is normal expansion, not a violation.
+- **Hyperonym variation** for stylistic relief ("the treatment" referring back to "FT") is acceptable when the referent is unambiguous.
+- **Genuinely different categories** (a "heavier" subgroup *within* the "obese group") need different terms — but the relationship must be explicit.
+
+### 5d. Diagnostic prompt for the agent
+
+When the agent flags a candidate violation, it should explain:
+> "Methods에서는 'obese group'으로 정의되었으나, Results에서는 'heavier participants'로 표현되었습니다. 독자는 두 표현이 같은 집단을 가리키는지 새로운 하위집단을 말하는지 즉시 판단할 수 없습니다."
+
+---
+
+## 6. Acronym Discipline
+
+Acronyms are a special case of terminological consistency. They reduce repetition but **only when the reader can decode them effortlessly**.
+
+### 6a. Definition rules
+
+- **Define at first use** in the Abstract AND again at first use in the main text. Readers may skim to the Methods or Discussion before reading the Introduction.
+- **Re-define in each Table caption** and each **Figure caption**. Captions are read out of order.
+- After definition, **use the acronym consistently**. Do not switch back to the full form without rhetorical reason.
+
+### 6b. Acronym austerity
+
+- **Permit only universally recognized acronyms** without re-definition (DNA, RNA, PCR, NMR, MRI, CO₂, GDP, etc.).
+- **Flag invented acronyms** that appear fewer than ~5 times — they cost the reader more than they save.
+- **Flag acronym pile-ups** in a single sentence ("the SOC dynamics in the FT-treated MAOM fraction of the AGS subplot..."). When ≥3 acronyms appear in one clause, the agent recommends spelling out at least one for readability.
+
+### 6c. Cross-link
+
+For numerical and citation integrity (where acronym discipline has the highest stakes — undefined acronyms in tables block reproduction), see `quantitative_integrity.md` §4.
+
+---
+
+## 7. Agent Diagnostic Questions
 
 For each paragraph:
 - What is the topic sentence? Is it the first sentence?
@@ -118,6 +186,12 @@ For each sentence:
 - Does the sentence opening connect to the preceding sentence?
 - Is the most important new information at or near the sentence end?
 - Is there a gap between subject and verb — and if so, does it slow the reader?
+
+For terminology (Banana Rule):
+- Has any defined Methods term been replaced by a synonym in Results or Discussion?
+- Are all acronyms defined where required (Abstract, main text, each caption)?
+- Is any acronym invented for fewer than ~5 uses?
+- Are there acronym pile-ups (≥3 acronyms in one clause)?
 
 For the passage overall:
 - Which thematic progression pattern is the writer using — and is it appropriate?

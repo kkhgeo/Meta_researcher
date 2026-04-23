@@ -10,22 +10,26 @@ This manual guides an AI proofreading agent to evaluate and improve **advanced s
 ### Step 1 — Identify the section being reviewed
 | Section keyword | Load these files |
 |---|---|
-| Abstract | `sections/01_abstract.md` + `cross_section/stance_hedging.md` |
+| Abstract | `sections/01_abstract.md` + `cross_section/stance_hedging.md` + `cross_section/quantitative_integrity.md` |
 | Introduction | `sections/02_introduction.md` + `cross_section/stance_hedging.md` + `cross_section/cohesion_flow.md` |
-| Methods | `sections/03_methods.md` + `cross_section/sentence_craft.md` |
-| Results | `sections/04_results.md` + `cross_section/cohesion_flow.md` |
-| Results & Discussion (combined) | `sections/05_results_discussion.md` + `cross_section/stance_hedging.md` |
+| Methods | `sections/03_methods.md` + `cross_section/sentence_craft.md` + `cross_section/quantitative_integrity.md` |
+| Results | `sections/04_results.md` + `cross_section/cohesion_flow.md` + `cross_section/quantitative_integrity.md` |
+| Results & Discussion (combined) | `sections/05_results_discussion.md` + `cross_section/stance_hedging.md` + `cross_section/quantitative_integrity.md` |
 | Discussion | `sections/06_discussion.md` + `cross_section/stance_hedging.md` + `cross_section/cohesion_flow.md` |
 | Conclusion | `sections/07_conclusion.md` + `cross_section/stance_hedging.md` |
 
 ### Step 2 — Apply cross-section principles always
 These files apply to **every section** regardless:
-- `cross_section/cohesion_flow.md` — Given-New, thematic progression, paragraph architecture
+- `cross_section/cohesion_flow.md` — Given-New, thematic progression, paragraph architecture, **Banana Rule (terminological consistency)**, **acronym discipline**
 - `cross_section/sentence_craft.md` — Nominalization, voice, subject-verb, tense
 - `cross_section/stance_hedging.md` — Hedges, boosters, self-mention, engagement markers
+- `cross_section/clutter_redundancy.md` — Dead-weight phrases, intro-phrase deletion, lexical redundancy (Sainani-style clutter audit)
 
 ### Step 3 — Check for advanced non-native writer issues
 - `cross_section/advanced_nns_issues.md` — Collocation, register, article use, discourse-level errors
+
+### Step 4 — Apply integrity audit (Mode 1 always; Mode 2/3 when numeric/citation content present)
+- `cross_section/quantitative_integrity.md` — N consistency, percentage math, sig-fig drift, secondary-source flagging, reporting-standard compliance. Also drives Agent B's expanded behavior (numeric cross-check + Telephone Game audit)
 
 ---
 
@@ -53,10 +57,12 @@ writing-manual/
 │   ├── 06_discussion.md
 │   └── 07_conclusion.md
 └── cross_section/
-    ├── cohesion_flow.md
+    ├── cohesion_flow.md               (incl. Banana Rule + acronym discipline)
     ├── sentence_craft.md
     ├── stance_hedging.md
-    └── advanced_nns_issues.md
+    ├── advanced_nns_issues.md
+    ├── clutter_redundancy.md          (Sainani-style clutter audit)
+    └── quantitative_integrity.md      (N/percentage/sig-fig/Telephone Game)
 ```
 
 ---

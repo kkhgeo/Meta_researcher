@@ -76,6 +76,9 @@
 
 ### Mode 1: Paper
 
+Mode 1 always closes with the **Top-5 priority block** (see
+`harness/deliberation.md` Top-N Priority Sort).
+
 ```markdown
 ## 논문 전체 검토
 
@@ -90,10 +93,29 @@
 2. [섹션명] — [이유]
 
 ---
-*"[섹션] 검토" / "다른 섹션" / "종료"*
+
+### 우선 수정 5건 (영향도 순)
+
+| 순위 | 위치 | 분류 | 문제 요약 | 합의/발견/충돌 | 영향도 |
+|---|---|---|---|---|---|
+| 1 | [Section ref] | [category] | [1-line summary] | [합의/R1·R2/충돌] | [score] |
+| 2 | ... | ... | ... | ... | ... |
+| 3 | ... | ... | ... | ... | ... |
+| 4 | ... | ... | ... | ... | ... |
+| 5 | ... | ... | ... | ... | ... |
+
+**1순위 상세:**
+**[EN]** `[problematic text]`
+**수정안:** `[revised text]`
+**근거:** [rationale]
+
+---
+*"[섹션] 검토" / "1순위 적용" / "2순위 보기" / "다른 섹션" / "종료"*
 ```
 
 ### Mode 2: Section
+
+Mode 2 always closes with the **Top-5 priority block**.
 
 ```markdown
 ## [섹션명] — 단락 [N]개
@@ -106,7 +128,48 @@
 [합의/발견/충돌 항목들]
 
 ---
-*"단락 [N] 검토" / "다음 섹션" / "전체 보기"*
+
+### 우선 수정 5건 (영향도 순)
+
+| 순위 | 위치 | 분류 | 문제 요약 | 합의/발견/충돌 | 영향도 |
+|---|---|---|---|---|---|
+| 1 | [Para N] | [category] | [1-line summary] | [tag] | [score] |
+| 2 | ... | ... | ... | ... | ... |
+| 3 | ... | ... | ... | ... | ... |
+| 4 | ... | ... | ... | ... | ... |
+| 5 | ... | ... | ... | ... | ... |
+
+**1순위 상세:**
+**[EN]** `[problematic text]`
+**수정안:** `[revised text]`
+**근거:** [rationale]
+
+---
+*"단락 [N] 검토" / "1순위 적용" / "다음 섹션" / "전체 보기"*
+```
+
+### Mode 3 — paragraph phase
+
+After paragraph-level deliberation (before sentence-by-sentence review),
+present the **Top-3 priority block** for the paragraph:
+
+```markdown
+### 단락 [N] — 우선 수정 3건 (영향도 순)
+
+| 순위 | 위치 | 분류 | 문제 요약 | 합의/발견/충돌 | 영향도 |
+|---|---|---|---|---|---|
+| 1 | 문장 [M] | [category] | [summary] | [tag] | [score] |
+| 2 | ... | ... | ... | ... | ... |
+| 3 | ... | ... | ... | ... | ... |
+
+---
+*"문장별 검토 시작" / "1순위만 보기" / "다른 단락"*
+```
+
+If zero issues, replace with:
+```markdown
+### 우선 수정
+이 [모드 단위]에서 우선 수정할 항목이 없습니다.
 ```
 
 ### Mode 3: Paragraph

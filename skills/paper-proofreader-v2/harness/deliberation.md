@@ -159,6 +159,102 @@ Deliberation: standard 3-category classification per sentence.
 
 ---
 
+## Top-N Priority Sort (Closing Block)
+
+After classification (consensus / unique / conflict) and confidence routing,
+the orchestrator must produce a **Top-N Priority Revisions** block as the
+closing element of every Mode 1 and Mode 2 review. This block answers the
+user's first practical question: *"Of all these findings, what should I fix
+first?"*
+
+### When to produce
+
+| Mode | Top-N produced? | N |
+|---|---|---|
+| Mode 1 (Paper) | Yes | 5 |
+| Mode 2 (Section) | Yes | 5 |
+| Mode 3 — paragraph phase | Yes | 3 |
+| Mode 3 — sentence phase | No (per-sentence decisions are atomic) |
+
+### Ranking rules
+
+Pool every issue across all reviewers (consensus + unique + conflict).
+Score each issue by **impact**, then sort descending. Impact = a
+combination of severity, agreement, and category weight:
+
+```
+impact_score =
+    severity_weight (CRITICAL=4, HIGH=3, MEDIUM=2, LOW=1)
+  + reviewer_agreement (count of reviewers flagging it, max 4)
+  + category_weight
+```
+
+Where `category_weight` adds priority for findings that affect
+the paper's credibility, not only its style:
+
+| Finding category | category_weight |
+|---|---|
+| Numerical inconsistency (from `quantitative_integrity.md`) | +3 |
+| Secondary-source citation for quantitative claim | +2 |
+| Reference verification failure (from `agent_b.md` NOT_FOUND) | +3 |
+| Terminological inconsistency across sections (Banana Rule) | +2 |
+| Argument-structure / logic issue | +2 |
+| Cohesion / Given-New violation | +1 |
+| Hedge under/over-calibration | +1 |
+| Clutter / redundancy | +1 |
+| Sentence-craft polish | +0 |
+
+Tie-break order: severity → agreement → location (earlier in document first).
+
+### Output format
+
+```markdown
+### 우선 수정 [N]건 (영향도 순)
+
+| 순위 | 위치 | 분류 | 문제 요약 | 합의/발견/충돌 | 영향도 |
+|---|---|---|---|---|---|
+| 1 | [Section/Para/Sent ref] | [category] | [1-line summary] | [agreement tag] | [score] |
+| 2 | ... | ... | ... | ... | ... |
+| 3 | ... | ... | ... | ... | ... |
+```
+
+Below the table, expand the **top item** with its full revision suggestion
+so the user can act immediately. The remaining items reference the detail
+already presented in the consensus/unique/conflict blocks above.
+
+```markdown
+**1순위 상세:**
+**[EN]** `[problematic text]`
+**수정안:** `[revised text]`
+**근거:** [rationale]
+
+→ "1순위 적용" / "2순위 보기" / "전체 보기"
+```
+
+### Suppression rule
+
+If fewer than N issues exist, list only what exists. If zero issues exist
+across all reviewers, omit the block and replace with:
+
+```markdown
+### 우선 수정
+이 [모드 단위]에서 우선 수정할 항목이 없습니다.
+```
+
+### Interaction with confidence routing
+
+If the top-ranked item has CONFIDENCE: LOW, the orchestrator must still
+present it but flag it explicitly:
+
+```markdown
+**1순위** [LOW 신뢰도] — 추가 검색을 권장합니다.
+```
+
+The user can request "검색해봐" to invoke the web-search supplement before
+deciding.
+
+---
+
 ## Deliberation Statistics (Session Summary)
 
 Track across the session:
@@ -173,6 +269,10 @@ deliberation_stats = {
     user_accepted_consensus: int,    // user followed consensus
     user_accepted_unique: int,       // user accepted unique finding
     user_resolved_conflict: int,     // user resolved a conflict
-    user_rejected: int               // user rejected a suggestion
+    user_rejected: int,              // user rejected a suggestion
+    // Integrity counters from Agent B (see agents/agent_b.md):
+    ref_not_found: int,              // citation existence failures
+    numeric_inconsistencies: int,    // N/percentage/sig-fig conflicts
+    secondary_citations_flagged: int // Telephone Game audit hits
 }
 ```
