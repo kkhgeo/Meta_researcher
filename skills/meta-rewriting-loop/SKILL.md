@@ -149,22 +149,31 @@ references/blueprint-template.md의 형식과 기준을 따르세요.
 
 **You MUST read `references/self-diagnosis.md` first!**
 
-### 4 Diagnostic Items
+### 7 Diagnostic Items
 
-| # | Item | What to check | Reference? |
-|---|------|---------------|------------|
-| 1 | Redundancy | 동일 정보 중복 서술 | No |
-| 2 | Evidence Gap | 근거 없는 주장 | No |
-| 3 | Structural Necessity | 삭제해도 논지에 영향 없는 문장 | No |
-| 4 | Section Coherence | 내용이 잘못된 섹션에 위치 | No |
+콘텐츠 품질(1-4) + 무결성 감사(5-7). 모두 레퍼런스 독립.
+
+| # | Item | What to check | Category |
+|---|------|---------------|----------|
+| 1 | Redundancy | 동일 정보 중복 서술 | Content |
+| 2 | Evidence Gap | 근거 없는 주장 | Content |
+| 3 | Structural Necessity | 삭제해도 논지에 영향 없는 문장 | Content |
+| 4 | Section Coherence | 내용이 잘못된 섹션에 위치 | Content |
+| 5 | Lexical Clutter | "It is worth noting that" 류 universally cuttable 어구 | Integrity |
+| 6 | Terminological Consistency (Banana Rule) | Methods 정의 용어가 Results/Discussion에서 동의어로 치환, 약어 정의 누락 | Integrity |
+| 7 | Quantitative & Citation Integrity | N/percentage/sig-fig 불일치, 정량 주장의 2차 인용 (Telephone Game) | Integrity |
+
+항목 5-7은 SciWrite (Sainani, Stanford) 원칙 기반. Stage 2(스타일 전이)와
+충돌하지 않는 보편 무결성 규칙만 포함하여 reference-driven 설계를 보호한다.
 
 ### Process
 
 1. 초고 전체를 읽고 단락(¶)/문장(S) 번호 매기기
-2. 4개 항목별로 이슈 식별
-3. 각 이슈에 대해: 위치, 설명, 심각도(Major/Minor), 권장 조치
+2. 7개 항목별로 이슈 식별 (1-4 콘텐츠, 5-7 무결성)
+3. 각 이슈에 대해: 위치, 설명, 심각도(Critical/Major/Minor), 권장 조치
 4. 교정 적용 → Pre-corrected Draft 생성
 5. **User Confirmation Gate**: 진단 결과 + Pre-corrected Draft 표시
+   - Critical 이슈(주로 정량 무결성)는 별도 강조하여 표시
 
 ### Gate Rule
 
