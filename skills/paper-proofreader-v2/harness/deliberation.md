@@ -16,10 +16,16 @@ Wait for all to complete. Each returns:
 
 ```
 ISSUES: [
-    { id, description, location, severity, confidence }
+    { id, criterion, description, location, severity, confidence }
 ]
 SUGGESTIONS: [
-    { id, original_text, revised_text, rationale, evidence_source }
+    {
+        id, issue_id, original,
+        alternatives: [
+            { label, revised, tone, rationale }  // 1-3 items (see agent_reviewer.md Rule 11)
+        ],
+        evidence_source
+    }
 ]
 CONFIDENCE: HIGH | MEDIUM | LOW (per issue)
 ```
@@ -46,12 +52,19 @@ Two or more reviewers flagged the same issue.
 
 [문제 설명 — 한국어]
 
-**수정안 A:** `[R1's suggestion]`
-**수정안 B:** `[R3's suggestion]` (if different)
+**수정안 (R1-A, concise):** `[R1 alternative A text]`
+**수정안 (R1-B, formal-precise):** `[R1 alternative B text]`
+**수정안 (R3-A, readable):** `[R3 alternative A text]`
 **근거:** [evidence source, if any]
 ```
 
-**User action:** Choose between suggestions or modify.
+For LOGIC / STRUCTURE / FACTUAL issues, each reviewer usually provides a
+single alternative — display only what exists. For STYLE / HEDGING /
+TERMINOLOGY issues, reviewers typically provide 2-3 alternatives per
+agent_reviewer.md Rule 11; show up to 4 alternatives total across reviewers
+(prefer variety of `tone` labels over redundant near-duplicates).
+
+**User action:** Choose between alternatives (`"R1-A 적용"`, `"R3-A 적용"`) or modify.
 
 #### Category 2: Unique Finding (1 reviewer only, with evidence)
 
@@ -62,11 +75,12 @@ Only one reviewer flagged it, but provides a rationale.
 #### [R1 발견] — Issue title
 [문제 설명 — 한국어]
 
-**수정안:** `[suggestion]`
+**수정안 (A, [tone]):** `[alternative A text]`
+**수정안 (B, [tone]):** `[alternative B text]`   (only if reviewer provided multiple per Rule 11)
 **근거:** [what knowledge/rule informed this finding]
 ```
 
-**User action:** Accept, reject, or request more detail.
+**User action:** Accept (`"적용"` for single alt, `"A 적용"` / `"B 적용"` for multiple), reject, or request more detail.
 
 #### Category 3: Conflict (reviewers disagree)
 
@@ -225,11 +239,14 @@ already presented in the consensus/unique/conflict blocks above.
 ```markdown
 **1순위 상세:**
 **[EN]** `[problematic text]`
-**수정안:** `[revised text]`
+**수정안 (A, [tone]):** `[alternative A text]`
+**수정안 (B, [tone]):** `[alternative B text]`   (if reviewer provided multiple per Rule 11)
 **근거:** [rationale]
 
-→ "1순위 적용" / "2순위 보기" / "전체 보기"
+→ "1순위 A 적용" / "1순위 B 적용" / "2순위 보기" / "전체 보기"
 ```
+
+When only a single alternative exists (LOGIC / STRUCTURE / FACTUAL issues, or LOW severity), display one `**수정안:**` line without an A/B label.
 
 ### Suppression rule
 

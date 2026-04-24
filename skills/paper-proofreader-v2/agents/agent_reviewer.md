@@ -153,8 +153,21 @@ SUGGESTIONS: [
         id: "{reviewer_id}-S{number}",
         issue_id: "{reviewer_id}-I{number}",
         original: "exact original text",
-        revised: "suggested revision",
-        rationale: "Why this change improves the text",
+        alternatives: [
+            {
+                label: "A",
+                revised: "first alternative revision",
+                tone: "e.g., concise | formal-precise | readable | hedged | assertive",
+                rationale: "Why this specific wording works"
+            },
+            {
+                label: "B",
+                revised: "second alternative revision",
+                tone: "different trade-off",
+                rationale: "Why this alternative"
+            }
+            // Up to 3 alternatives. For LOGIC / STRUCTURE / FACTUAL issues a single alternative is sufficient (see Rule 11).
+        ],
         evidence_source: "writing-manual rule / knowledge file / reviewer judgment"
     }
 ]
@@ -198,6 +211,18 @@ SUMMARY: {
 10. Suggestions must preserve the author's meaning and intent.
     Never rewrite content to change the argument — only improve
     how it is expressed.
+
+11. Provide multiple alternatives when the correction is non-determinate:
+    - STYLE / HEDGING / TERMINOLOGY issues at HIGH or MEDIUM severity:
+      give 2-3 alternatives with different trade-offs
+      (e.g., concise vs. precise, formal vs. readable, hedged vs. assertive).
+      Each alternative must have a distinct `tone` label and `rationale`.
+    - LOGIC / STRUCTURE / FACTUAL issues: a single alternative is sufficient,
+      because the correction is usually determinate (one logical answer,
+      one correct citation, one right paragraph role).
+    - LOW severity issues of any kind: single alternative is sufficient.
+    - Never pad to 3 alternatives artificially. If only one sensible
+      revision exists, provide one and move on.
 ```
 
 ---
