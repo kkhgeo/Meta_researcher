@@ -25,6 +25,21 @@ description: >
 - **English original text:** Always displayed alongside Korean explanation
 - **User input style:** Korean or English, free-form; see `config/navigation.md` for input mapping
 - **Tools used:** Read, Glob, Grep, WebSearch, WebFetch, SendMessage
+- **Visual format:** v5 box+line hybrid Tier system, defined in
+  `config/output_format.md`. **Every structural block is rendered inside
+  a fenced code block** (triple backticks) — this is non-negotiable, and
+  the only reason boxes/lines align under Korean text. **No ANSI color**
+  (the markdown renderer strips it). Severity shapes `▲ ● ○ ■` carry
+  the severity signal alone. **Box width: ~100 chars.** Use **full
+  boxes** (`┌─┐ │ └─┘`) only for English-only content (English original
+  quotes) and the Tier 1 priority table — these can reliably align right
+  edges. Use **line pattern** (top+bottom horizontal rules `══` or `──`,
+  no right edge) for Korean labels, intent tables, conflict R1/R4 sides,
+  navigation/action prompts — anywhere right-edge alignment under Korean
+  width math would break the box. **Translation** stays in a `┌─ 번역 ─┐`
+  full box, with conservative content (5+ char buffer inside). Default
+  to **Tier 1** (compact Top-3); user opens Tier 2 single card via
+  `"1번"`/`"#3 자세히"`, Tier 3 full list via `"다 보여줘"`.
 
 ---
 
@@ -63,7 +78,7 @@ paper-proofreader-v2/
 | Agent | File | Instances | Role |
 |---|---|---|---|
 | **Agent E** | `agents/agent_e.md` | 1 | Knowledge discovery, parsing, distribution |
-| **Agent R** | `agents/agent_reviewer.md` | 2-4 (R1, R2, R3, R4) | Parallel review with distributed knowledge |
+| **Agent R** | `agents/agent_reviewer.md` | 2-5 (R1, R2, R3, R4, R5) | Parallel review with distributed knowledge / personas |
 | **Agent B** | `agents/agent_b.md` | 1 | Post-paragraph reference verification |
 | **Orchestrator** | This file | 1 | Workflow control, deliberation, user interaction |
 
@@ -73,10 +88,20 @@ paper-proofreader-v2/
 |---|---|---|
 | R1 | writing-manual + Knowledge Group A | Domain expert A |
 | R2 | writing-manual + Knowledge Group B | Domain expert B |
-| R3 | writing-manual only | Rule-based judge |
-| R4 | None (no references) | Educated reader (LLM judgment only) |
+| R3 | writing-manual only | Rule-based judge — strict adherence to writing-manual rules |
+| R4 | None (no references) | LLM judgment only — academic-writing generalist |
+| R5 | None (no references) — **expert non-specialist reader persona** | Cross-disciplinary scientific reader: PhD-level competence in academic-writing conventions and scientific reasoning, but **no specialist knowledge of this paper's particular subfield**. Judges whether the argument lands when read by a competent scientist from an adjacent field — i.e., are the discipline-specific terms scaffolded enough that the logic is followable, are the warrants explicit, and does the evidence-claim chain hold up under generic scientific scrutiny? Flags passages where a smart scientist outside this subfield would have to stop and reread, or where unstated subfield assumptions silently load the argument. |
 
 Exact grouping rules: Read `knowledge/distribution_strategy.md`.
+
+R4 and R5 differ in **persona**, not data: both have no external knowledge,
+but R4 evaluates as a generic academic-writing reviewer (logic, hedging,
+flow, sentence craft), while R5 evaluates strictly as a **cross-disciplinary
+scientific reader** (an experienced scientist from an adjacent field). R5's
+job is to test whether the paragraph survives a competent outside-the-subfield
+read: are subfield-specific premises made portable, or do they leak in
+unstated? This is *not* a "lay reader" check — assume PhD-level training,
+just from a different discipline.
 
 ---
 
@@ -194,24 +219,10 @@ Apply `harness/confidence_routing.md` for display detail level.
 
 ### 5c. Present Priority Sections
 
-Display results following `config/output_format.md` Mode 1 format:
-
-```markdown
-## 논문 전체 검토
-
-### 구조 맵
-[Section] → [Section] → ... (연결 품질 표시)
-
-### 리뷰어 토론 결과
-[합의/발견/충돌 항목들]
-
-### 우선 수정 섹션
-1. [섹션명] — [이유]
-2. [섹션명] — [이유]
-
----
-*"[섹션] 검토" / "다른 섹션" / "종료"*
-```
+Render results using the **Tier 1 box format** from
+`config/output_format.md` (header box → "지금 꼭 봐야 할 3가지" boxed
+table → nav box). Top-3 by default; user expands to Top-5 / full list
+via `"다 보여줘"` (Tier 3). Do not emit raw markdown headings.
 
 ---
 
@@ -246,21 +257,11 @@ Focus on paragraph-level issues.
 
 ### 6c. Present Results
 
-Display following `config/output_format.md` Mode 2 format:
-
-```markdown
-## [섹션명] — 단락 [N]개
-
-| # | 첫 문장 요약 | 역할 |
-|---|---|---|
-| 1 | [...] | [도입/근거/해석/전환 등] |
-
-### 리뷰어 토론 결과
-[합의/발견/충돌 항목들]
-
----
-*"단락 [N] 검토" / "다음 섹션" / "전체 보기"*
-```
+Render results using the **Tier 1 box format** from
+`config/output_format.md`. Header box names the section and paragraph
+count; the "지금 꼭 봐야 할 3가지" boxed table lists the Top-3 paragraph
+issues by impact score; nav box closes. User expands via
+`"1번"` (Tier 2 card) or `"다 보여줘"` (Tier 3, all cards).
 
 ---
 

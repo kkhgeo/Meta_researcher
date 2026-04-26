@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Define how knowledge files are divided among reviewer agents (R1–R4)
+Define how knowledge files are divided among reviewer agents (R1–R5)
 so each reviewer brings a different perspective to the same review task.
 
 ---
@@ -14,10 +14,14 @@ so each reviewer brings a different perspective to the same review task.
 | **R1** | writing-manual + Knowledge Group A | Domain expert A |
 | **R2** | writing-manual + Knowledge Group B | Domain expert B |
 | **R3** | writing-manual only | Rule-based judge |
-| **R4** | None (no references) | Educated reader (LLM judgment) |
+| **R4** | None (no references) | Generic academic-writing reviewer (LLM judgment) |
+| **R5** | None (no references) — **cross-disciplinary scientific reader persona** | PhD-level scientist from an adjacent field. No specialist knowledge of this subfield. Tests whether the argument is portable: are warrants explicit, are subfield premises scaffolded rather than assumed, does the evidence-claim chain survive an outside-the-subfield read? |
 
-All four reviewers receive **identical review instructions**.
-The only variable is `{allocated_knowledge}` in the prompt.
+All five reviewers receive **identical review instructions**.
+The only variables are `{allocated_knowledge}` and `{persona_directive}`
+in the prompt. R4 and R5 receive the same (empty) knowledge but different
+persona directives — R4 evaluates as a generic reviewer, R5 as an
+expert scientist from outside this subfield.
 
 ---
 
@@ -50,7 +54,10 @@ Group B = content_files[half:] + writing_files[half:]
 R1 → writing-manual + Group A
 R2 → writing-manual + Group B
 R3 → writing-manual only
-R4 → nothing
+R4 → nothing                  (generic academic-writing reviewer persona)
+R5 → nothing                  (cross-disciplinary scientific reader persona)
+
+Total reviewers: 5
 ```
 
 **Case B — Small collection (2-3 content files):**
@@ -62,7 +69,10 @@ Group B = all writing_files
 R1 → writing-manual + Group A (content knowledge)
 R2 → writing-manual + Group B (writing patterns)
 R3 → writing-manual only
-R4 → nothing
+R4 → nothing                  (generic academic-writing reviewer persona)
+R5 → nothing                  (cross-disciplinary scientific reader persona)
+
+Total reviewers: 5
 ```
 
 **Case C — Minimal (0-1 files):**
@@ -71,9 +81,10 @@ R4 → nothing
 R1 → writing-manual + whatever is available
 R2 → writing-manual only (becomes second baseline)
 R3 → (skip — merge into R2)
-R4 → nothing
+R4 → nothing                  (generic academic-writing reviewer persona)
+R5 → nothing                  (cross-disciplinary scientific reader persona)
 
-Total reviewers: 3 (R1, R2, R4)
+Total reviewers: 4 (R1, R2, R4, R5)
 ```
 
 **Case D — No knowledge files at all:**

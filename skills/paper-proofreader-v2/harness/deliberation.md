@@ -41,65 +41,49 @@ Two issues "match" when they:
 
 ### Step 3: Classify into Three Categories
 
+All three categories use the **box-drawn issue card** defined in
+`config/output_format.md` (Tier 2, sections 2a / 2b / 2c).
+Do NOT emit raw markdown headings (`####`) or bullet lists for issue
+results. The card format is mandatory.
+
 #### Category 1: Consensus (2+ reviewers agree)
 
 Two or more reviewers flagged the same issue.
 
-**Presentation:**
-```markdown
-#### [합의] — Issue title
-**지적:** R1, R3 동의 | R2 동의하나 다른 수정안 | R4 미지적
+- Use **card 2a** (single-alternative) when the issue is LOGIC /
+  STRUCTURE / FACTUAL — the correction is determinate.
+- Use **card 2b** (multi-alternative) when the issue is STYLE / HEDGING /
+  TERMINOLOGY / CLUTTER — show 2–3 tone-varied alternatives drawn
+  from across the agreeing reviewers (prefer variety of `tone` labels
+  over near-duplicates; cap at 3).
 
-[문제 설명 — 한국어]
+Header line: `발견자: R1+R3 합의` (or `R1+R2+R4 합의`).
 
-**수정안 (R1-A, concise):** `[R1 alternative A text]`
-**수정안 (R1-B, formal-precise):** `[R1 alternative B text]`
-**수정안 (R3-A, readable):** `[R3 alternative A text]`
-**근거:** [evidence source, if any]
-```
-
-For LOGIC / STRUCTURE / FACTUAL issues, each reviewer usually provides a
-single alternative — display only what exists. For STYLE / HEDGING /
-TERMINOLOGY issues, reviewers typically provide 2-3 alternatives per
-agent_reviewer.md Rule 11; show up to 4 alternatives total across reviewers
-(prefer variety of `tone` labels over redundant near-duplicates).
-
-**User action:** Choose between alternatives (`"R1-A 적용"`, `"R3-A 적용"`) or modify.
+**User action:** `"[#] 적용"` (single) or `"[#] [A/B/C] 적용"` (multi).
 
 #### Category 2: Unique Finding (1 reviewer only, with evidence)
 
 Only one reviewer flagged it, but provides a rationale.
 
-**Presentation:**
-```markdown
-#### [R1 발견] — Issue title
-[문제 설명 — 한국어]
+- Card 2a if the reviewer supplied one alternative.
+- Card 2b if the reviewer supplied multiple alternatives per
+  `agents/agent_reviewer.md` Rule 11.
 
-**수정안 (A, [tone]):** `[alternative A text]`
-**수정안 (B, [tone]):** `[alternative B text]`   (only if reviewer provided multiple per Rule 11)
-**근거:** [what knowledge/rule informed this finding]
-```
+Header line: `발견자: R1 단독` (replace with the actual reviewer ID).
 
-**User action:** Accept (`"적용"` for single alt, `"A 적용"` / `"B 적용"` for multiple), reject, or request more detail.
+**User action:** `"[#] 적용"` / `"[#] [A/B/C] 적용"` / `"[#] 무시"`.
 
 #### Category 3: Conflict (reviewers disagree)
 
 Reviewers propose contradictory changes to the same text.
 
-**Presentation:**
-```markdown
-#### [의견 충돌] — Issue title
-[충돌 설명 — 한국어]
+Use **card 2c** (conflict layout). Both reviewers' suggestions and
+rationales appear in their own labeled boxes side-by-side (vertically
+stacked, each in `┌─ R[n] 의견 ─┐`).
 
-**R1 의견:** `[R1's view + suggestion]`
-  근거: [R1's rationale]
-**R4 의견:** `[R4's view + suggestion]`
-  근거: [R4's rationale]
+Header line: `의견 충돌:  R1 ↔ R4`.
 
-[왜 이 충돌이 발생했는지 설명]
-```
-
-**User action:** Choose one or provide own resolution.
+**User action:** `"R[n] 따름"` / `"직접 입력"` / `"건너뛰기"`.
 
 ---
 
@@ -115,14 +99,17 @@ Within each category, order by severity (HIGH > MEDIUM > LOW).
 
 ## No-Issue Consensus
 
-If all reviewers agree there are no issues with the current text:
+If all reviewers agree there are no issues with the current text, use the
+plain box from `config/output_format.md`:
 
-```markdown
-### [전원 동의] — 문제 없음
-R1, R2, R3, R4 모두 이 [문장/단락/섹션]에 수정이 필요하지 않다고 판단했습니다.
+```
+┌──────────────────────────────────────────────────────────┐
+│  전원 동의 — 이 [문장/단락/섹션]에 수정 필요 없음.       │
+└──────────────────────────────────────────────────────────┘
 
----
-*"다음" / "그래도 자세히 봐줘"*
+┌──────────────────────────────────────────────────────────┐
+│  진행  "다음"  ·  "그래도 자세히 봐줘"                   │
+└──────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -183,12 +170,16 @@ first?"*
 
 ### When to produce
 
-| Mode | Top-N produced? | N |
+| Mode | Top-N (Tier 1 view) | Top-N (Tier 3 full list) |
 |---|---|---|
-| Mode 1 (Paper) | Yes | 5 |
-| Mode 2 (Section) | Yes | 5 |
-| Mode 3 — paragraph phase | Yes | 3 |
-| Mode 3 — sentence phase | No (per-sentence decisions are atomic) |
+| Mode 1 (Paper) | 3 | 5 |
+| Mode 2 (Section) | 3 | 5 |
+| Mode 3 — paragraph phase | 3 | 3 |
+| Mode 3 — sentence phase | n/a (per-sentence decisions are atomic) | n/a |
+
+Tier 1 (the default first response) always shows the top 3.
+The user expands to the full Top-N (5 for paper/section) by saying
+`"다 보여줘"` / `"전체 보기"` (Tier 3).
 
 ### Ranking rules
 
@@ -222,52 +213,52 @@ Tie-break order: severity → agreement → location (earlier in document first)
 
 ### Output format
 
-```markdown
-### 우선 수정 [N]건 (영향도 순)
+The Top-N priority block is rendered as the **Tier 1 boxed table** from
+`config/output_format.md`:
 
-| 순위 | 위치 | 분류 | 문제 요약 | 합의/발견/충돌 | 영향도 |
-|---|---|---|---|---|---|
-| 1 | [Section/Para/Sent ref] | [category] | [1-line summary] | [agreement tag] | [score] |
-| 2 | ... | ... | ... | ... | ... |
-| 3 | ... | ... | ... | ... | ... |
+```
+지금 꼭 봐야 할 [N]가지
+
+┌────┬────────┬─────────────────┬─────────────────────────┐
+│ #  │ 심각도 │ 카테고리        │ 한 줄 요약              │
+├────┼────────┼─────────────────┼─────────────────────────┤
+│ 1  │  ▲     │ [category]      │ [≤25자]                 │
+│ 2  │  ▲     │ [category]      │ [≤25자]                 │
+│ 3  │  ●     │ [category]      │ [≤25자]                 │
+└────┴────────┴─────────────────┴─────────────────────────┘
 ```
 
-Below the table, expand the **top item** with its full revision suggestion
-so the user can act immediately. The remaining items reference the detail
-already presented in the consensus/unique/conflict blocks above.
+Severity → marker mapping: CRITICAL → `■` · HIGH → `▲` · MEDIUM → `●` ·
+LOW → `○`. No other emoji or icon may appear in the table.
 
-```markdown
-**1순위 상세:**
-**[EN]** `[problematic text]`
-**수정안 (A, [tone]):** `[alternative A text]`
-**수정안 (B, [tone]):** `[alternative B text]`   (if reviewer provided multiple per Rule 11)
-**근거:** [rationale]
-
-→ "1순위 A 적용" / "1순위 B 적용" / "2순위 보기" / "전체 보기"
-```
-
-When only a single alternative exists (LOGIC / STRUCTURE / FACTUAL issues, or LOW severity), display one `**수정안:**` line without an A/B label.
+Do **not** auto-expand the top item below the table. The Tier 1 view is
+intentionally compact (the full nav box from `config/output_format.md`
+follows the table). The user pulls detail by saying `"1번"` /
+`"#1 자세히"`, which renders the appropriate Tier 2 card (2a / 2b / 2c).
 
 ### Suppression rule
 
 If fewer than N issues exist, list only what exists. If zero issues exist
-across all reviewers, omit the block and replace with:
+across all reviewers, replace the table with:
 
-```markdown
-### 우선 수정
-이 [모드 단위]에서 우선 수정할 항목이 없습니다.
+```
+┌──────────────────────────────────────────────────────────┐
+│  이 [모드 단위]에서 우선 수정할 항목이 없습니다.         │
+└──────────────────────────────────────────────────────────┘
 ```
 
 ### Interaction with confidence routing
 
-If the top-ranked item has CONFIDENCE: LOW, the orchestrator must still
-present it but flag it explicitly:
+If the top-ranked item has CONFIDENCE: LOW, append a one-line flag box
+**below** the Tier 1 table (before the nav box):
 
-```markdown
-**1순위** [LOW 신뢰도] — 추가 검색을 권장합니다.
+```
+┌──────────────────────────────────────────────────────────┐
+│  1순위는 신뢰도 낮음 — "검색해봐" 라고 하면 보강합니다.  │
+└──────────────────────────────────────────────────────────┘
 ```
 
-The user can request "검색해봐" to invoke the web-search supplement before
+The user can say `"검색해봐"` to invoke the web-search supplement before
 deciding.
 
 ---
